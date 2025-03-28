@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: Dockerfile  # Doporučuji přesunout Dockerfile do rootu
     container_name: skywitness-app
     ports:
       - "8000:80"
@@ -11,7 +11,8 @@ services:
       - ./src:/var/www/src
       - ./templates:/var/www/templates
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - DB_HOST=db
       - DB_NAME=skywitness
@@ -28,8 +29,14 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/data:/docker-entrypoint-initdb.d/data
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d skywitness"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:

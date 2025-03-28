@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sightings>
+    <sighting id="1">
+        <title>Bright lights over Prague</title>
+        <date>2023-05-15</date>
+        <location>Prague, Czech Republic</location>
+        <country>Czech Republic</country>
+        <ufo_shape>Cylinder</ufo_shape>
+        <description>Three bright lights forming a triangle pattern moving silently across the sky.</description>
+    </sighting>
+    <sighting id="2">
+        <title>Strange object near Brno</title>
+        <date>2023-06-22</date>
+        <location>Brno, Czech Republic</location>
+        <country>Czech Republic</country>
+        <ufo_shape>Disk</ufo_shape>
+        <description>Disk-shaped object hovering for about 10 minutes before disappearing suddenly.</description>
+    </sighting>
+    <sighting id="3">
+        <title>Lights over Texas</title>
+        <date>2023-04-10</date>
+        <location>Texas, USA</location>
+        <country>United States</country>
+        <ufo_shape>Light</ufo_shape>
+        <description>Multiple lights moving in formation.</description>
+    </sighting>
+</sightings>

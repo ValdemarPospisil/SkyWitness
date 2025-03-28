@@ -3,58 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $title ?? 'SkyWitness - UFO Sightings'; ?></title>
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
-    <link href="/assets/css/style.css" rel="stylesheet">
+    <title><?= htmlspecialchars($title ?? 'SkyWitness - UFO Sightings') ?></title>
+    
+    <!-- Pico CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    
+    <!-- Phosphor ikony - opravený CDN -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
+    
     <style>
-        .xml-output {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 20px;
-            max-height: 300px;
-            overflow-y: auto;
+        /* Vlastní úpravy */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            gap: 1rem;
         }
-        .sighting-card {
-            transition: transform 0.3s;
-            margin-bottom: 20px;
+        
+        nav ul {
+            margin-bottom: 0;
         }
-        .sighting-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        
+        .theme-switcher {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .theme-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.25rem;
+            color: var(--muted-color);
+            padding: 0.5rem;
+        }
+        
+        .theme-btn:hover {
+            color: var(--color);
+        }
+        
+        .ph {
+            display: inline-block;
+            vertical-align: middle;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-ufo me-2"></i>SkyWitness
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/sightings.php">Sightings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/xml-operations.php">XML Operations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/test-db.php">DB Test</a>
-                    </li>
+    <main class="container">
+        <header>
+            <h1 style="margin-bottom: 0;">
+                <a href="/" style="text-decoration: none;">
+                    <i class="ph ph-alien"></i> SkyWitness
+                </a>
+            </h1>
+            
+            <nav>
+                <ul>
+                    <li><a href="/"><i class="ph ph-house"></i> Home</a></li>
+                    <li><a href="/sightings.php"><i class="ph ph-binoculars"></i> Sightings</a></li>
+                    <li><a href="/xml-operations.php"><i class="ph ph-code"></i> XML Tools</a></li>
                 </ul>
+            </nav>
+            
+            <div class="theme-switcher">
+                <button class="theme-btn" id="light-btn" title="Light mode">
+                    <i class="ph ph-sun"></i>
+                </button>
+                <button class="theme-btn" id="dark-btn" title="Dark mode">
+                    <i class="ph ph-moon"></i>
+                </button>
             </div>
-        </div>
-    </nav>
-    <div class="container">
+        </header>
+
+        <script>
+            // Funkce pro změnu tématu
+            function setTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+            }
+            
+            // Načtení uloženého tématu
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+            
+            // Přepínače
+            document.getElementById('light-btn').addEventListener('click', () => setTheme('light'));
+            document.getElementById('dark-btn').addEventListener('click', () => setTheme('dark'));
+        </script>

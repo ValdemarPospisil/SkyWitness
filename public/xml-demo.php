@@ -11,7 +11,7 @@ header('Content-Type: text/html; charset=utf-8');
     </style>
 </head>
 <body>
-    <h1>UFO Sightings from XML</h1>
+    <h2>UFO Sightings from XML</h2>
     
     <?php
     // Load XML file
