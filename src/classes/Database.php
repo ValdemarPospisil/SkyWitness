@@ -14,9 +14,15 @@ class Database {
         );
     }
 
+    // Spouští dotaz s parametry
     public function query($sql, $params = []) {
         $stmt = $this->connection->prepare($sql);
         $stmt->execute($params);
         return $stmt;
+    }
+
+    // Explicitní prepare pro specifické případy
+    public function prepare($sql) {
+        return $this->connection->prepare($sql);
     }
 }

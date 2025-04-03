@@ -5,54 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($title ?? 'SkyWitness - UFO Sightings') ?></title>
     
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/sightings.css">
+    <link rel="stylesheet" href="/assets/css/theme.css">
     <!-- Pico CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css"
+> 
     <!-- Phosphor ikony - opravený CDN -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
-    />
-    
-    <style>
-        /* Vlastní úpravy */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            gap: 1rem;
-        }
-        
-        nav ul {
-            margin-bottom: 0;
-        }
-        
-        .theme-switcher {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-        
-        .theme-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.25rem;
-            color: var(--muted-color);
-            padding: 0.5rem;
-        }
-        
-        .theme-btn:hover {
-            color: var(--color);
-        }
-        
-        .ph {
-            display: inline-block;
-            vertical-align: middle;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+     
 </head>
 <body>
     <main class="container">
@@ -82,17 +44,14 @@
         </header>
 
         <script>
-            // Funkce pro změnu tématu
             function setTheme(theme) {
                 document.documentElement.setAttribute('data-theme', theme);
                 localStorage.setItem('theme', theme);
             }
             
-            // Načtení uloženého tématu
             const savedTheme = localStorage.getItem('theme') || 'light';
             setTheme(savedTheme);
             
-            // Přepínače
             document.getElementById('light-btn').addEventListener('click', () => setTheme('light'));
             document.getElementById('dark-btn').addEventListener('click', () => setTheme('dark'));
         </script>

@@ -22,26 +22,6 @@ try {
 }
 ?>
 
-<main class="container">
-    <!-- Hero sekce s obrázkem -->
-    <section class="hero">
-        <div class="hero-content">
-            <h3><i class="ph ph-alien"></i> Explore UFO Sightings</h3>
-            <p class="lead">Discover and report unexplained aerial phenomena from around the world</p>
-            <div class="grid">
-                <a href="/sightings.php" role="button" class="secondary">
-                    <i class="ph ph-binoculars"></i> Browse Sightings
-                </a>
-                <a href="/xml-operations.php" role="button">
-                    <i class="ph ph-code"></i> XML Tools
-                </a>
-            </div>
-        </div>
-        <div class="hero-image">
-            <img src="/assets/images/ufo-hero.png" alt="UFO illustration" loading="lazy">
-        </div>
-    </section>
-
     <!-- Statistiky -->
     <section>
         <h2><i class="ph ph-trend-up"></i> Global Statistics</h2>
