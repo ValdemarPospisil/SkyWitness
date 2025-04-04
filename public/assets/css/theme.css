@@ -1,14 +1,96 @@
+/* Hlavní barevný systém s Pico Colors */
+
+/* Světlý motiv */
 [data-theme="light"],
-main:not([data-theme="dark"]) {
-  --primary: pico-color-pink-500;
-  --primary-hover: #ff5722;
+:root:not([data-theme="dark"]) {
+  /* Primární barva - Pink z Pico Colors */
+  --primary: #00895a; /* Jade 500 */
+  --primary-hover: #033823; /* Jade 800 */
   --primary-focus: rgba(244, 81, 30, 0.25);
   --primary-inverse: #FFF;
+  
+  /* Akcentová barva - Jade z Pico Colors */
+  --accent: #ffbf00; /* Amber 200 */
+  --accent-hover: #b78800; /* Amber 400 */
+  --accent-focus: rgba(0, 128, 128, 0.25);
+  --accent-inverse: #FFF;
+  
+  /* Další barvy a odstíny */
+  --card-background-color: white;
+  --card-border-color: var(--muted-border-color);
+  --card-box-shadow: 0 0.125rem 1rem rgba(0, 0, 0, 0.05);
+  
+  --ufo-shadow-color: rgba(244, 81, 30, 0.3);
 }
+
+/* Tmavý motiv */
 [data-theme="dark"],
-main:not([data-theme="light"]) {
-  --primary: pico-background-pink-600;
-  --primary-hover: #f57c00;
-  --primary-focus: rgba(251, 140, 0, 0.125);
+:root:not([data-theme="light"]) {
+  /* Primární barva - Pink z Pico Colors, tmavší odstín */
+  --primary: #006d46;
+  --primary-hover: #015234;
+  --primary-focus: rgba(251, 140, 0, 0.25);
   --primary-inverse: #FFF;
+  
+  /* Akcentová barva - Jade z Pico Colors, tmavší odstín */
+  --accent: #00cc88;
+  --accent-hover: #00a66e;
+  --accent-focus: rgba(0, 128, 128, 0.25);
+  --accent-inverse: #FFF;
+
+  --contrast: #ad9f00;
+  --contrast-hover: #827800;
+  --contrast-focus: rgba(251, 140, 0, 0.25);
+  --contrast-inverse: #FFF;
+  
+  /* Další barvy a odstíny pro tmavý motiv */
+  --card-background-color: var(--card-sectionning-background-color);
+  --card-border-color: var(--card-sectionning-background-color);
+  --card-box-shadow: 0 0.125rem 1rem rgba(0, 0, 0, 0.1);
+  
+  --ufo-shadow-color: rgba(251, 140, 0, 0.3);
 }
+
+/* Pomocné třídy pro použití barev z Pico Colors */
+.primary-bg {
+  background-color: var(--primary);
+  color: var(--primary-inverse);
+}
+
+.accent-bg {
+  background-color: var(--accent);
+  color: var(--accent-inverse);
+}
+
+/* Specifické komponenty - např. UFO karty */
+.ufo-card {
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 15px var(--ufo-shadow-color);
+  transition: all 0.3s;
+}
+
+.ufo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px var(--ufo-shadow-color);
+}
+
+/* Třídy pro tlačítka s akcentovou barvou */
+.button.accent,
+[role="button"].accent {
+  background-color: var(--accent);
+  color: var(--accent-inverse);
+  border: var(--border-width) solid var(--accent);
+}
+
+.button.accent:hover,
+[role="button"].accent:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.button.accent:focus,
+[role="button"].accent:focus {
+  box-shadow: 0 0 0 var(--outline-width) var(--accent-focus);
+}
+
+

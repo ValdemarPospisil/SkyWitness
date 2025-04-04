@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($title ?? 'SkyWitness - UFO Sightings') ?></title>
     
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/sightings.css">
-    <link rel="stylesheet" href="/assets/css/theme.css">
     
     <!-- Pico CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css"> 
     
     <!-- Phosphor ikony - opravený CDN -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
-     
+    
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/sightings.css">
+    <link rel="stylesheet" href="/assets/css/theme.css">
 </head>
 <body>
     <main class="container">
@@ -35,11 +34,8 @@
             </nav>
             
             <div class="theme-switcher">
-                <button class="theme-btn" id="light-btn" title="Light mode">
-                    <i class="ph ph-sun"></i>
-                </button>
-                <button class="theme-btn" id="dark-btn" title="Dark mode">
-                    <i class="ph ph-moon"></i>
+                <button class="theme-btn" id="theme-toggle" title="Switch theme">
+                    <i class="ph ph-sun" id="theme-icon"></i>
                 </button>
             </div>
         </header>
@@ -48,11 +44,25 @@
             function setTheme(theme) {
                 document.documentElement.setAttribute('data-theme', theme);
                 localStorage.setItem('theme', theme);
+                
+                // Aktualizace ikony podle aktivního motivu
+                const themeIcon = document.getElementById('theme-icon');
+                if (theme === 'dark') {
+                    themeIcon.classList.remove('ph-sun');
+                    themeIcon.classList.add('ph-moon');
+                } else {
+                    themeIcon.classList.remove('ph-moon');
+                    themeIcon.classList.add('ph-sun');
+                }
             }
             
+            // Načtení uloženého motivu nebo výchozí světlý
             const savedTheme = localStorage.getItem('theme') || 'light';
             setTheme(savedTheme);
             
-            document.getElementById('light-btn').addEventListener('click', () => setTheme('light'));
-            document.getElementById('dark-btn').addEventListener('click', () => setTheme('dark'));
+            // Přepínání mezi light/dark při kliknutí na jedno tlačítko
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
         </script>

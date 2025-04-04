@@ -17,6 +17,7 @@ if (!$sighting) {
 include __DIR__.'/../templates/header.php';
 ?>
 
+
 <div class="container mt-4">
     <h1><?= htmlspecialchars($sighting['ufo_shape']) ?> Sighting</h1>
     

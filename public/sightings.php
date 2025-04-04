@@ -52,8 +52,8 @@ $urlParams = $filters;
         </header>
 
         <!-- Filtry -->
-        <details>
-            <summary role="button" class="secondary">
+        <details class="filters-container">
+            <summary role="button" class="accent">
                 <i class="ph ph-funnel"></i> Filters
             </summary>
             <div class="grid">
@@ -105,7 +105,7 @@ $urlParams = $filters;
                         </label>
                     </div>
                     <button type="submit" class="primary">Apply Filters</button>
-                    <a href="sightings.php" role="button" class="secondary">Reset</a>
+                    <a href="sightings.php" role="button" class="contrast">Reset</a>
                 </form>
             </div>
         </details>
@@ -136,7 +136,7 @@ $urlParams = $filters;
                         </td>
                         <td><?= htmlspecialchars($sighting['encounter_duration']) ?></td>
                         <td>
-                            <a href="sighting_detail.php?id=<?= $sighting['id'] ?>" role="button" class="secondary small">
+                            <a href="sighting_detail.php?id=<?= $sighting['id'] ?>" role="button" class="accent">
                                 <i class="ph ph-info"></i> Details
                             </a>
                         </td>
@@ -152,7 +152,7 @@ $urlParams = $filters;
                 <li>
                     <a 
                         href="?<?= buildQueryString(array_merge($urlParams, ['page' => max(1, $page - 1)])) ?>" 
-                        class="button <?= $page == 1 ? 'secondary disabled' : 'pico-background-jade-500 pico-color-black' ?>" 
+                        class="button <?= $page == 1 ? 'secondary disabled' : 'accent' ?>" 
                         aria-label="Previous">
                         &laquo;
                     </a>
@@ -161,7 +161,7 @@ $urlParams = $filters;
                 <li>
                     <a 
                         href="?<?= buildQueryString(array_merge($urlParams, ['page' => 1])) ?>" 
-                        class="button <?= $page == 1 ? 'contrast' : 'pico-background-jade-500 pico-color-black' ?>" 
+                        class="button <?= $page == 1 ? 'secondary disabled' : 'accent' ?>" 
                         aria-label="First">
                         1
                     </a>
@@ -192,7 +192,7 @@ $urlParams = $filters;
                 <li>
                     <a 
                         href="?<?= buildQueryString(array_merge($urlParams, ['page' => $i])) ?>" 
-                        class="button <?= $i == $page ? 'contrast' : 'pico-background-jade-500 pico-color-black' ?>">
+                        class="button <?= $i == $page ? 'secondary disabled' : 'accent' ?>">
                         <?= $i ?>
                     </a>
                 </li>
@@ -208,7 +208,7 @@ $urlParams = $filters;
                 <li>
                     <a 
                         href="?<?= buildQueryString(array_merge($urlParams, ['page' => $totalPages])) ?>" 
-                        class="button <?= $page == $totalPages ? 'contrast' : 'pico-background-jade-500 pico-color-black' ?>">
+                        class="button <?= $page == $totalPages ? 'secondary disabled' : 'accent' ?>">
                         <?= $totalPages ?>
                     </a>
                 </li>
@@ -219,7 +219,7 @@ $urlParams = $filters;
                 <li>
                     <a 
                         href="?<?= buildQueryString(array_merge($urlParams, ['page' => min($totalPages, $page + 1)])) ?>" 
-                        class="button <?= $page == $totalPages ? 'secondary disabled' : 'pico-background-jade-500 pico-color-black' ?>" 
+                        class="button <?= $page == $totalPages ? 'secondary disabled' : 'accent' ?>" 
                         aria-label="Next">
                         &raquo;
                     </a>

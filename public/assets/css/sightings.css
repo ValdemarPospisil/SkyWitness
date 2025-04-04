@@ -19,13 +19,16 @@
 }
 
 .pagination .button:hover {
-    background: var(--primary);
-    color: var(--jade-150);
+    background: var(--accent-hover);
+    color: var(--primary-inverse);
 }
 
-.pagination .button.contrast {
-    background: var(--primary);
-    color: var(--primary-inverse);
+
+
+/* Tlačítka ve stavu hover používají akcentovou barvu */
+.pagination .button:not(.contrast):not(.disabled):hover {
+    background: var(--accent-hover);
+    color: var(--accent-inverse);
 }
 
 .pagination .disabled {
@@ -56,11 +59,9 @@ details[open] summary {
     border-radius: var(--border-radius);
     background-color: var(--card-background-color);
     box-shadow: var(--card-box-shadow);
+    border-left: 4px solid var(--accent);
 }
 
-.text-center {
-    text-align: center;
-}
 
 /* Styly pro text paginace */
 .pagination-info {
@@ -75,7 +76,41 @@ details[open] summary {
     display: inline-block;
     padding: 0.25rem 0.5rem;
     border-radius: var(--border-radius);
-    background-color: var(--primary);
-    color: var(--primary-inverse);
+    background-color: var(--accent);
+    color: var(--accent-inverse);
     font-size: 0.85rem;
+}
+
+/* Karty pro detail pozorování */
+.sighting-card {
+    border-radius: var(--border-radius);
+    background-color: var(--card-background-color);
+    box-shadow: var(--card-box-shadow);
+    border-top: 3px solid var(--primary);
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.sighting-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Nastavení pro tabulky */
+table[role="grid"] th {
+    background-color: var(--card-background-color);
+    border-bottom: 2px solid var(--primary);
+}
+
+/* Alternující barvy řádků tabulky */
+table[role="grid"] tbody tr:nth-child(odd) {
+    background-color: var(--card-background-color);
+}
+
+table[role="grid"] tbody tr:nth-child(even) {
+    background-color: var(--card-sectionning-background-color);
+}
+
+/* Hovery pro řádky tabulky */
+table[role="grid"] tbody tr:hover {
+    background-color: var(--primary-focus);
 }

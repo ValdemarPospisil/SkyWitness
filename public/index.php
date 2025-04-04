@@ -22,6 +22,39 @@ try {
 }
 ?>
 
+    <article class="sighting-card">
+        <header>
+            <h3><i class="ph ph-shooting-star"></i> Nedávné pozorování</h3>
+        </header>
+        <p>12. dubna 2023, USA - Triangle UFO pozorováno nad Arizonou</p>
+        <footer>
+            <a href="/sighting_detail.php?id=123" role="button" class="accent">
+            <i class="ph ph-info"></i> Zobrazit detail
+            </a>
+        </footer>
+    </article>
+
+
+    <div class="grid">
+        <article class="primary-bg" style="padding: 1rem; border-radius: var(--border-radius);">
+            <h3>Top země</h3>
+            <ol>
+            <li>USA (863)</li>
+            <li>Kanada (124)</li>
+            <li>UK (98)</li>
+            </ol>
+        </article>
+        
+        <article class="accent-bg" style="padding: 1rem; border-radius: var(--border-radius);">
+            <h3>Nejčastější tvary</h3>
+            <ul>
+            <li>Světlo (312)</li>
+            <li>Disk (189)</li>
+            <li>Trojúhelník (156)</li>
+            </ul>
+        </article>
+    </div>
+
     <!-- Statistiky -->
     <section>
         <h2><i class="ph ph-trend-up"></i> Global Statistics</h2>
