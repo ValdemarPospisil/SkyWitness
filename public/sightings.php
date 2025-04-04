@@ -6,6 +6,20 @@ require_once __DIR__.'/../src/classes/UfoSighting.php';
 $db = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD);
 $ufoSighting = new UfoSighting($db);
 
+// Filtry
+$filters = [
+    'country' => $_GET['country'] ?? '',
+    'shape' => $_GET['shape'] ?? '',
+    'year' => $_GET['year'] ?? '',
+    'season' => $_GET['season'] ?? ''
+];
+
+// Získání seznamu zemí a tvarů pro filtry
+$countries = $ufoSighting->getDistinctValues('country');
+$shapes = $ufoSighting->getDistinctValues('ufo_shape');
+$years = $ufoSighting->getDistinctValues('year');
+$seasons = $ufoSighting->getDistinctValues('season');
+
 // Počet záznamů na stránku
 $limit = 50;
 
@@ -13,13 +27,21 @@ $limit = 50;
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
-// Získání dat
-$sightings = $ufoSighting->getPaginated($limit, $offset);
-$totalRecords = $ufoSighting->getTotalCount();
+// Získání dat s filtry
+$sightings = $ufoSighting->getPaginatedWithFilters($limit, $offset, $filters);
+$totalRecords = $ufoSighting->getTotalCountWithFilters($filters);
 $totalPages = ceil($totalRecords / $limit);
 
 $title = "UFO Sightings Database";
 include __DIR__.'/../templates/header.php';
+
+// Funkce pro vytvoření URL s filtry a stránkováním
+function buildQueryString($params) {
+    return http_build_query($params);
+}
+
+// Připravíme parametry pro stránkování
+$urlParams = $filters;
 ?>
 
 <main class="container">
@@ -28,6 +50,65 @@ include __DIR__.'/../templates/header.php';
             <h2><i class="ph ph-binoculars"></i> UFO Sightings</h2>
             <p>Browse through our database of reported unidentified aerial phenomena</p>
         </header>
+
+        <!-- Filtry -->
+        <details>
+            <summary role="button" class="secondary">
+                <i class="ph ph-funnel"></i> Filters
+            </summary>
+            <div class="grid">
+                <form method="get" action="">
+                    <div class="grid">
+                        <label for="country">
+                            Country:
+                            <select name="country" id="country">
+                                <option value="">All Countries</option>
+                                <?php foreach ($countries as $country): ?>
+                                    <option value="<?= htmlspecialchars($country) ?>" <?= $filters['country'] === $country ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($country) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </label>
+                        <label for="shape">
+                            UFO Shape:
+                            <select name="shape" id="shape">
+                                <option value="">All Shapes</option>
+                                <?php foreach ($shapes as $shape): ?>
+                                    <option value="<?= htmlspecialchars($shape) ?>" <?= $filters['shape'] === $shape ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($shape) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </label>
+                        <label for="year">
+                            Year:
+                            <select name="year" id="year">
+                                <option value="">All Years</option>
+                                <?php foreach ($years as $year): ?>
+                                    <option value="<?= htmlspecialchars($year) ?>" <?= $filters['year'] === $year ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($year) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </label>
+                        <label for="season">
+                            Season:
+                            <select name="season" id="season">
+                                <option value="">All Seasons</option>
+                                <?php foreach ($seasons as $season): ?>
+                                    <option value="<?= htmlspecialchars($season) ?>" <?= $filters['season'] === $season ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($season) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </label>
+                    </div>
+                    <button type="submit" class="primary">Apply Filters</button>
+                    <a href="sightings.php" role="button" class="secondary">Reset</a>
+                </form>
+            </div>
+        </details>
 
         <div class="table-responsive">
             <table role="grid">
@@ -65,53 +146,90 @@ include __DIR__.'/../templates/header.php';
             </table>
         </div>
 
-        <!-- Paginace -->
-        
-    <footer>
-        <ul class="pagination">
-    <!-- Previous Button -->
-    <li>
-        <a 
-            href="?page=<?= max(1, $page - 1) ?>" 
-            class="button <?= $page == 1 ? 'secondary disabled' : 'pico-background-jade-500 pico-color-black' ?>" 
-            aria-label="Previous">
-            &laquo;
-        </a>
-    </li>
 
-    <!-- Stránky -->
-    <?php for ($i = 1; $i <= min($totalPages, 5); $i++): ?>
-    <li>
-        <a 
-            href="?page=<?= $i ?>" 
-            class="button <?= $i == $page ? 'contrast' : 'pico-background-jade-500 pico-color-black' ?>">
-            <?= $i ?>
-        </a>
-    </li>
-    <?php endfor; ?>
+        <footer>
+            <ul class="pagination">
+                <li>
+                    <a 
+                        href="?<?= buildQueryString(array_merge($urlParams, ['page' => max(1, $page - 1)])) ?>" 
+                        class="button <?= $page == 1 ? 'secondary disabled' : 'pico-background-jade-500 pico-color-black' ?>" 
+                        aria-label="Previous">
+                        &laquo;
+                    </a>
+                </li>
+                <!-- První stránka -->
+                <li>
+                    <a 
+                        href="?<?= buildQueryString(array_merge($urlParams, ['page' => 1])) ?>" 
+                        class="button <?= $page == 1 ? 'contrast' : 'pico-background-jade-500 pico-color-black' ?>" 
+                        aria-label="First">
+                        1
+                    </a>
+                </li>
 
-    <!-- Ellipsis -->
-    <?php if ($totalPages > 5): ?>
-    <li><span>...</span></li>
-    <li>
-        <a href="?page=<?= $totalPages ?>" class="button pico-background-jade-500 pico-color-black">
-            <?= $totalPages ?>
-        </a>
-    </li>
-    <?php endif; ?>
+                <!-- Ellipsis před aktuální stránkou (když je potřeba) -->
+                <?php if ($page > 3): ?>
+                <li><span>...</span></li>
+                <?php endif; ?>
 
-    <!-- Next Button -->
-    <li>
-        <a 
-            href="?page=<?= min($totalPages, $page + 1) ?>" 
-            class="button <?= $page == $totalPages ? 'secondary disabled' : 'pico-background-jade-500 pico-color-black' ?>" 
-            aria-label="Next">
-            &raquo;
-        </a>
-    </li>
-</ul>
+                <!-- 5 stránek od aktuální (nebo méně, pokud jsme blízko začátku) -->
+                <?php
+                $startPage = max(2, $page - 2);
+                $endPage = min($totalPages - 1, $page + 2);
+                
+                // Pokud jsme blízko začátku, zobrazujeme více stránek směrem dopředu
+                if ($page < 4) {
+                    $endPage = min($totalPages - 1, 6);
+                }
+                
+                // Pokud jsme blízko konce, zobrazujeme více stránek směrem dozadu
+                if ($page > $totalPages - 3) {
+                    $startPage = max(2, $totalPages - 5);
+                }
+                
+                for ($i = $startPage; $i <= $endPage; $i++):
+                ?>
+                <li>
+                    <a 
+                        href="?<?= buildQueryString(array_merge($urlParams, ['page' => $i])) ?>" 
+                        class="button <?= $i == $page ? 'contrast' : 'pico-background-jade-500 pico-color-black' ?>">
+                        <?= $i ?>
+                    </a>
+                </li>
+                <?php endfor; ?>
+
+                <!-- Ellipsis po aktuální stránce (když je potřeba) -->
+                <?php if ($endPage < $totalPages - 1): ?>
+                <li><span>...</span></li>
+                <?php endif; ?>
+
+                <!-- Poslední stránka (když není stejná jako první) -->
+                <?php if ($totalPages > 1): ?>
+                <li>
+                    <a 
+                        href="?<?= buildQueryString(array_merge($urlParams, ['page' => $totalPages])) ?>" 
+                        class="button <?= $page == $totalPages ? 'contrast' : 'pico-background-jade-500 pico-color-black' ?>">
+                        <?= $totalPages ?>
+                    </a>
+                </li>
+                <?php endif; ?>
+
+                <!-- Next tlačítko -->
+                
+                <li>
+                    <a 
+                        href="?<?= buildQueryString(array_merge($urlParams, ['page' => min($totalPages, $page + 1)])) ?>" 
+                        class="button <?= $page == $totalPages ? 'secondary disabled' : 'pico-background-jade-500 pico-color-black' ?>" 
+                        aria-label="Next">
+                        &raquo;
+                    </a>
+                </li>
+            </ul>
+            <p>
+                <?= $totalRecords ?> záznamů celkem | Stránka <?= $page ?> z <?= $totalPages ?>
+            </p>
         </footer>
-  </article>
+    </article>
 </main>
 
 <?php include __DIR__.'/../templates/footer.php'; ?>
