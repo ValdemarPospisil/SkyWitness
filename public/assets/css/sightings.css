@@ -1,10 +1,177 @@
+
+/* Filter accordion */
+.filters-container {
+    border: var(--border-size-2) solid var(--primary);
+    border-radius: var(--radius-3);
+    padding: var(--size-3);
+    background: var(--surface-1);
+    box-shadow: var(--shadow-2);
+    margin-bottom: var(--size-4);
+  }
+  
+  .filters-summary {
+    cursor: pointer;
+    margin: auto;
+    padding: var(--size-3);
+    border-radius: var(--radius-2);
+    background: var(--surface-2);
+    color: var(--text-1);
+    font-weight: var(--font-weight-6);
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+    width: 100%;
+    transition: background 0.3s ease;
+  }
+  
+  .filters-summary:hover {
+    background: var(--surface-3);
+  }
+  
+  .filters-form {
+    margin-top: var(--size-3);
+  }
+  
+  .filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--size-3);
+    margin-bottom: var(--size-3);
+  }
+  
+  .filter-actions {
+    display: flex;
+    gap: var(--size-2);
+  }
+
+
+/* Form elements */
+label {
+    display: block;
+    margin-bottom: var(--size-2);
+    font-weight: var(--font-weight-5);
+}
+
+select, input {
+    width: 100%;
+    padding: var(--size-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background-color: var(--surface);
+    color: var(--text);
+    font-family: inherit;
+    font-size: var(--font-size-1);
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary-focus);
+}
+
+  
+
+/* UFO shape badge */
+.ufo-shape {
+    display: inline-block;
+    padding: var(--size-1) var(--size-2);
+    border-radius: var(--radius-sm);
+    background-color: var(--primary);
+    color: var(--accent-inverse);
+    font-size: var(--font-size-0);
+}
+
+/* Sighting cards */
+.sighting-card {
+    border-radius: var(--radius);
+    background-color: var(--card-background);
+    box-shadow: var(--card-box-shadow);
+    border-top: 3px solid var(--primary);
+    border-bottom: 3px solid var(--primary);
+    border-left: 3px solid var(--primary);
+    border-right: 3px solid var(--primary);
+    padding: var(--size-4);
+    transition: transform var(--transition-fast);
+}
+
+
+.sighting-card header {
+    padding: 0;
+    margin-bottom: var(--size-3);
+}
+
+.sighting-card h3 {
+    margin: 0;
+}
+
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--size-4);
+}
+
+table th, table td {
+    padding: var(--size-2);
+    text-align: left;
+    border-bottom: 1px solid var(--primary);
+}
+
+table th {
+    background-color: var(--card-background);
+    font-weight: var(--font-weight-6);
+    border-bottom: 2px solid var(--secondary);
+}
+
+th.asc::after {
+    content: " ▲";
+    margin-left: 0.25rem;
+    color: var(--primary);
+  }
+  
+  th.desc::after {
+    content: " ▼";
+    margin-left: 0.25rem;
+    color: var(--primary);
+  }
+  
+
+table tbody tr:nth-child(odd) {
+    background-color: var(--surface-2);
+}
+
+table tbody tr {
+    background-color: var(--surface-2);
+}
+
+table tbody tr:hover {
+    background-color: var(--secondary-focus);
+}
+
+/* Table responsiveness */
+.table-responsive {
+    overflow-x: auto;
+    margin-bottom: var(--size-4);
+}
+
+@media (max-width: 768px) {
+    .filters-container form .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+ /* Paginace */
+
 .pagination {
     display: flex;
     justify-content: center;
-    gap: 0.5rem;
+    gap: var(--size-2);
     list-style: none;
     padding: 0;
-    margin-top: 1rem;
+    margin-top: var(--size-4);
 }
 
 .pagination li {
@@ -12,105 +179,34 @@
 }
 
 .pagination .button {
-    padding: 0.5rem 1rem;
-    border-radius: var(--border-radius);
-    transition: background 0.3s, color 0.3s;
+    padding: var(--size-2) var(--size-3);
+    border-radius: var(--radius);
+    background-color: var(--secondary);
+    transition: background var(--transition-fast), color var(--transition-fast);
     text-decoration: none;
+    min-width: 2.5rem;
+    text-align: center;
 }
 
 .pagination .button:hover {
-    background: var(--accent-hover);
-    color: var(--primary-inverse);
+    background: var(--secondary-hover);
+    color: var(--secondary-inverse);
 }
 
-
-
-/* Tlačítka ve stavu hover používají akcentovou barvu */
-.pagination .button:not(.contrast):not(.disabled):hover {
-    background: var(--accent-hover);
-    color: var(--accent-inverse);
-}
-
-.pagination .disabled {
+.pagination .button.disabled {
     opacity: 0.5;
     pointer-events: none;
+    background-color: var(--background-muted);
+    color: var(--text-muted);
 }
 
-.pagination .disabled:hover {
-    background: none;
+.pagination .button.secondary {
+    background-color: var(--secondary);
+    color: var(--secondary-inverse);
 }
 
-/* Styly pro filtry */
-details summary {
-    cursor: pointer;
-    margin-bottom: 1rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
+/* Pagination info text */
 
-details[open] summary {
-    margin-bottom: 1rem;
-}
-
-.filters-container {
-    margin-bottom: 2rem;
-    padding: 1rem;
-    border-radius: var(--border-radius);
-    background-color: var(--card-background-color);
-    box-shadow: var(--card-box-shadow);
-    border-left: 4px solid var(--accent);
-}
-
-
-/* Styly pro text paginace */
 .pagination-info {
-    text-align: center;
-    margin-top: 0.5rem;
-    color: var(--muted-color);
-    font-size: 0.9rem;
-}
-
-/* UFO shape badge */
-.ufo-shape {
-    display: inline-block;
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--border-radius);
-    background-color: var(--accent);
-    color: var(--accent-inverse);
-    font-size: 0.85rem;
-}
-
-/* Karty pro detail pozorování */
-.sighting-card {
-    border-radius: var(--border-radius);
-    background-color: var(--card-background-color);
-    box-shadow: var(--card-box-shadow);
-    border-top: 3px solid var(--primary);
-    margin-bottom: 1rem;
-    transition: transform 0.2s ease-in-out;
-}
-
-.sighting-card:hover {
-    transform: translateY(-3px);
-}
-
-/* Nastavení pro tabulky */
-table[role="grid"] th {
-    background-color: var(--card-background-color);
-    border-bottom: 2px solid var(--primary);
-}
-
-/* Alternující barvy řádků tabulky */
-table[role="grid"] tbody tr:nth-child(odd) {
-    background-color: var(--card-background-color);
-}
-
-table[role="grid"] tbody tr:nth-child(even) {
-    background-color: var(--card-sectionning-background-color);
-}
-
-/* Hovery pro řádky tabulky */
-table[role="grid"] tbody tr:hover {
-    background-color: var(--primary-focus);
+    margin-top: var(--size-6);
 }

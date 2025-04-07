@@ -1,60 +1,69 @@
-/* Hlavní barevný systém s Pico Colors */
-
 /* Světlý motiv */
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
-  /* Primární barva - Pink z Pico Colors */
-  --primary: #00895a; /* Jade 500 */
-  --primary-hover: #033823; /* Jade 800 */
-  --primary-focus: rgba(244, 81, 30, 0.25);
+  /* Primární barva */
+  --primary: #00895a;
+  --primary-hover: #033823;
+  --primary-focus: rgba(0, 137, 90, 0.25);
   --primary-inverse: #FFF;
   
-  /* Akcentová barva - Jade z Pico Colors */
-  --accent: #ffbf00; /* Amber 200 */
-  --accent-hover: #b78800; /* Amber 400 */
-  --accent-focus: rgba(0, 128, 128, 0.25);
+  /* Sekundární barva */
+  --secondary: #6c757d;
+  --secondary-hover: #5a6268;  
+  --secondary-focus: rgba(108, 117, 125, 0.25);
+  --secondary-inverse: #FFF;
+  
+  /* Akcentová barva */
+  --accent: #ffbf00;
+  --accent-hover: #b78800;
+  --accent-focus: rgba(255, 191, 0, 0.25);
   --accent-inverse: #FFF;
   
-  /* Další barvy a odstíny */
-  --card-background-color: white;
-  --card-border-color: var(--muted-border-color);
-  --card-box-shadow: 0 0.125rem 1rem rgba(0, 0, 0, 0.05);
-  
-  --ufo-shadow-color: rgba(244, 81, 30, 0.3);
+  /* Kontrastní barva */
+  --contrast: #e63946;
+  --contrast-hover: #c1121f;
+  --contrast-focus: rgba(230, 57, 70, 0.25);
+  --contrast-inverse: #FFF;
 }
 
 /* Tmavý motiv */
 [data-theme="dark"],
 :root:not([data-theme="light"]) {
-  /* Primární barva - Pink z Pico Colors, tmavší odstín */
+  /* Primární barva */
   --primary: #006d46;
   --primary-hover: #015234;
-  --primary-focus: rgba(251, 140, 0, 0.25);
+  --primary-focus: rgba(0, 109, 70, 0.25);
   --primary-inverse: #FFF;
   
-  /* Akcentová barva - Jade z Pico Colors, tmavší odstín */
+  /* Sekundární barva */
+  --secondary: #9ca3af;
+  --secondary-hover: #6b7280;
+  --secondary-focus: rgba(156, 163, 175, 0.25);
+  --secondary-inverse: #FFF;
+  
+  /* Akcentová barva */
   --accent: #00cc88;
   --accent-hover: #00a66e;
-  --accent-focus: rgba(0, 128, 128, 0.25);
+  --accent-focus: rgba(0, 204, 136, 0.25);
   --accent-inverse: #FFF;
 
+  /* Kontrastní barva */
   --contrast: #ad9f00;
   --contrast-hover: #827800;
-  --contrast-focus: rgba(251, 140, 0, 0.25);
+  --contrast-focus: rgba(173, 159, 0, 0.25);
   --contrast-inverse: #FFF;
-  
-  /* Další barvy a odstíny pro tmavý motiv */
-  --card-background-color: var(--card-sectionning-background-color);
-  --card-border-color: var(--card-sectionning-background-color);
-  --card-box-shadow: 0 0.125rem 1rem rgba(0, 0, 0, 0.1);
-  
-  --ufo-shadow-color: rgba(251, 140, 0, 0.3);
 }
 
-/* Pomocné třídy pro použití barev z Pico Colors */
+
+/* Pomocné třídy pro použití barev */
 .primary-bg {
   background-color: var(--primary);
   color: var(--primary-inverse);
+}
+
+.secondary-bg {
+  background-color: var(--secondary);
+  color: var(--secondary-inverse);
 }
 
 .accent-bg {
@@ -62,35 +71,47 @@
   color: var(--accent-inverse);
 }
 
-/* Specifické komponenty - např. UFO karty */
-.ufo-card {
-  border: 1px solid var(--primary);
-  box-shadow: 0 0 15px var(--ufo-shadow-color);
-  transition: all 0.3s;
+.contrast-bg {
+  background-color: var(--contrast);
+  color: var(--contrast-inverse);
 }
 
-.ufo-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 20px var(--ufo-shadow-color);
+/* Tlačítka s kontrastní barvou */
+.button.contrast,
+[role="button"].contrast {
+  background-color: var(--contrast);
+  color: var(--contrast-inverse);
+  border: var(--border-width) solid var(--contrast);
 }
 
-/* Třídy pro tlačítka s akcentovou barvou */
-.button.accent,
-[role="button"].accent {
-  background-color: var(--accent);
-  color: var(--accent-inverse);
-  border: var(--border-width) solid var(--accent);
+.button.contrast:hover,
+[role="button"].contrast:hover {
+  background-color: var(--contrast-hover);
+  border-color: var(--contrast-hover);
 }
 
-.button.accent:hover,
-[role="button"].accent:hover {
-  background-color: var(--accent-hover);
-  border-color: var(--accent-hover);
+.button.contrast:focus,
+[role="button"].contrast:focus {
+  box-shadow: 0 0 0 var(--outline-width) var(--contrast-focus);
 }
 
-.button.accent:focus,
-[role="button"].accent:focus {
-  box-shadow: 0 0 0 var(--outline-width) var(--accent-focus);
+/* Pro primary tlačítka */
+[role="button"].primary,
+button.primary {
+  background-color: var(--primary);
+  color: var(--primary-inverse);
 }
 
+/* Pro secondary tlačítka */
+[role="button"].secondary,
+button.secondary {
+  background-color: var(--secondary);
+  color: var(--secondary-inverse);
+}
 
+/* Pro contrast tlačítka */
+[role="button"].contrast,
+button.contrast {
+  background-color: var(--contrast);
+  color: var(--contrast-inverse);
+}

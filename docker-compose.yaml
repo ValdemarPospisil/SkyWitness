@@ -2,7 +2,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile  # Doporučuji přesunout Dockerfile do rootu
+      dockerfile: Dockerfile
     container_name: skywitness-app
     ports:
       - "8000:80"

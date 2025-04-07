@@ -53,71 +53,75 @@ $urlParams = $filters;
 
         <!-- Filtry -->
         <details class="filters-container">
-            <summary role="button" class="accent">
+            <summary role="button" class="filters-summary">
                 <i class="ph ph-funnel"></i> Filters
             </summary>
-            <div class="grid">
+            <div class="filters-form">
                 <form method="get" action="">
-                    <div class="grid">
-                        <label for="country">
-                            Country:
-                            <select name="country" id="country">
-                                <option value="">All Countries</option>
-                                <?php foreach ($countries as $country): ?>
-                                    <option value="<?= htmlspecialchars($country) ?>" <?= $filters['country'] === $country ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($country) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </label>
-                        <label for="shape">
-                            UFO Shape:
-                            <select name="shape" id="shape">
-                                <option value="">All Shapes</option>
-                                <?php foreach ($shapes as $shape): ?>
-                                    <option value="<?= htmlspecialchars($shape) ?>" <?= $filters['shape'] === $shape ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($shape) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </label>
-                        <label for="year">
-                            Year:
-                            <select name="year" id="year">
-                                <option value="">All Years</option>
-                                <?php foreach ($years as $year): ?>
-                                    <option value="<?= htmlspecialchars($year) ?>" <?= $filters['year'] === $year ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($year) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </label>
-                        <label for="season">
-                            Season:
-                            <select name="season" id="season">
-                                <option value="">All Seasons</option>
-                                <?php foreach ($seasons as $season): ?>
-                                    <option value="<?= htmlspecialchars($season) ?>" <?= $filters['season'] === $season ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($season) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </label>
-                    </div>
+                <div class="filter-grid">
+                    <label for="country">
+                    Country:
+                    <select name="country" id="country">
+                        <option value="">All Countries</option>
+                        <?php foreach ($countries as $country): ?>
+                        <option value="<?= htmlspecialchars($country) ?>" <?= $filters['country'] === $country ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($country) ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                    </label>
+                    <label for="shape">
+                    UFO Shape:
+                    <select name="shape" id="shape">
+                        <option value="">All Shapes</option>
+                        <?php foreach ($shapes as $shape): ?>
+                        <option value="<?= htmlspecialchars($shape) ?>" <?= $filters['shape'] === $shape ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($shape) ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                    </label>
+                    <label for="year">
+                    Year:
+                    <select name="year" id="year">
+                        <option value="">All Years</option>
+                        <?php foreach ($years as $year): ?>
+                        <option value="<?= htmlspecialchars($year) ?>" <?= $filters['year'] === $year ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($year) ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                    </label>
+                    <label for="season">
+                    Season:
+                    <select name="season" id="season">
+                        <option value="">All Seasons</option>
+                        <?php foreach ($seasons as $season): ?>
+                        <option value="<?= htmlspecialchars($season) ?>" <?= $filters['season'] === $season ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($season) ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                    </label>
+                </div>
+                <div class="filter-actions">
                     <button type="submit" class="primary">Apply Filters</button>
-                    <a href="sightings.php" role="button" class="contrast">Reset</a>
+                    <a href="sighting_detail.php?id=<?= $sighting['id'] ?>" role="button" class="accent">
+                        <i class="ph ph-arrow-bend-up-left"></i> Reset
+                    </a>
+                </div>
                 </form>
             </div>
         </details>
 
-        <div class="table-responsive">
+        <div class="table-responsive sighting-card">
             <table role="grid">
                 <thead>
                     <tr>
-                        <th scope="col"><i class="ph ph-calendar"></i> Date</th>
-                        <th scope="col"><i class="ph ph-map-pin"></i> Location</th>
-                        <th scope="col"><i class="ph ph-shapes"></i> Shape</th>
-                        <th scope="col"><i class="ph ph-clock"></i> Duration</th>
+                        <th data-sort="date" scope="col"><i class="ph ph-calendar"></i> Date</th>
+                        <th data-sort="location" scope="col"><i class="ph ph-map-pin"></i> Location</th>
+                        <th data-sort="shape" scope="col"><i class="ph ph-shapes"></i> Shape</th>
+                        <th data-sort="duration" scope="col"><i class="ph ph-clock"></i> Duration</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -147,7 +151,6 @@ $urlParams = $filters;
         </div>
 
 
-        <footer>
             <ul class="pagination">
                 <li>
                     <a 
@@ -225,11 +228,10 @@ $urlParams = $filters;
                     </a>
                 </li>
             </ul>
-            <p>
+            <p class="pagination-info">
                 <?= $totalRecords ?> záznamů celkem | Stránka <?= $page ?> z <?= $totalPages ?>
             </p>
-        </footer>
     </article>
 </main>
-
+<script src="assets/js/table-sort.js"></script>
 <?php include __DIR__.'/../templates/footer.php'; ?>

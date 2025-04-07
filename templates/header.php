@@ -4,24 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($title ?? 'SkyWitness - UFO Sightings') ?></title>
+
+    <link rel="icon" href="/assets/images/flying-saucer.svg" type="image/svg+xml">
+
     
+    <!-- Open Props Core -->
+    <link rel="stylesheet" href="https://unpkg.com/open-props"/>
     
-    <!-- Pico CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <!-- Optional imports based on your needs -->
+    <link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/open-props/buttons.min.css"/>
     
-    <!-- Phosphor ikony - opravený CDN -->
+    <!-- Phosphor icons -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
     
+    <!-- Your custom styles -->
+    <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/sightings.css">
-    <link rel="stylesheet" href="/assets/css/theme.css">
 </head>
 <body>
     <main class="container">
         <header>
-            <h1 style="margin-bottom: 0;">
-                <a href="/" style="text-decoration: none;">
-                    <i class="ph ph-alien"></i> SkyWitness
+            <h1>
+                <a href="/">
+                    <i class="ph ph-flying-saucer"></i> SkyWitness
                 </a>
             </h1>
             
@@ -40,29 +47,4 @@
             </div>
         </header>
 
-        <script>
-            function setTheme(theme) {
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-                
-                // Aktualizace ikony podle aktivního motivu
-                const themeIcon = document.getElementById('theme-icon');
-                if (theme === 'dark') {
-                    themeIcon.classList.remove('ph-sun');
-                    themeIcon.classList.add('ph-moon');
-                } else {
-                    themeIcon.classList.remove('ph-moon');
-                    themeIcon.classList.add('ph-sun');
-                }
-            }
-            
-            // Načtení uloženého motivu nebo výchozí světlý
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            setTheme(savedTheme);
-            
-            // Přepínání mezi light/dark při kliknutí na jedno tlačítko
-            document.getElementById('theme-toggle').addEventListener('click', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
-            });
-        </script>
+        <script src="/assets/js/theme.js"></script>
