@@ -1,4 +1,3 @@
-
 /* Filter accordion */
 .filters-container {
     border: var(--border-size-2) solid var(--primary);
@@ -21,7 +20,7 @@
     align-items: center;
     gap: var(--size-2);
     width: 100%;
-    transition: background 0.3s ease;
+    transition: background var(--transition-fast);
   }
   
   .filters-summary:hover {
@@ -43,88 +42,135 @@
     display: flex;
     gap: var(--size-2);
   }
-
-
-/* Form elements */
-label {
+  
+  /* Form elements */
+  label {
     display: block;
     margin-bottom: var(--size-2);
     font-weight: var(--font-weight-5);
-}
-
-select, input {
+    color: var(--text-1);
+  }
+  
+  select, input {
     width: 100%;
     padding: var(--size-2);
-    border: 1px solid var(--border);
+    border: var(--border-size-1) solid var(--border);
     border-radius: var(--radius-sm);
-    background-color: var(--surface);
-    color: var(--text);
+    background-color: var(--surface-1);
+    color: var(--text-1);
     font-family: inherit;
     font-size: var(--font-size-1);
-}
-
-select:focus, input:focus {
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  
+  select:focus, input:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 2px var(--primary-focus);
-}
-
+  }
   
-
-/* UFO shape badge */
-.ufo-shape {
+  select:hover, input:hover {
+    border-color: var(--primary-hover);
+  }
+  
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--size-2) var(--size-4);
+    border: none;
+    border-radius: var(--radius);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+  }
+  
+  button.primary {
+    background-color: var(--primary);
+    color: var(--primary-inverse);
+  }
+  
+  button.primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+  }
+  
+  button.accent, a[role="button"].accent {
+    background-color: var(--secondary);
+    color: var(--secondary-inverse);
+  }
+  
+  button.accent:hover, a[role="button"].accent:hover {
+    background-color: var(--secondary-hover);
+    transform: translateY(-1px);
+  }
+  
+  /* UFO shape badge */
+  .ufo-shape {
     display: inline-block;
     padding: var(--size-1) var(--size-2);
     border-radius: var(--radius-sm);
     background-color: var(--primary);
-    color: var(--accent-inverse);
+    color: var(--primary-inverse);
     font-size: var(--font-size-0);
-}
-
-/* Sighting cards */
-.sighting-card {
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Sighting cards */
+  .sighting-card {
     border-radius: var(--radius);
     background-color: var(--card-background);
     box-shadow: var(--card-box-shadow);
     border-top: 3px solid var(--primary);
-    border-bottom: 3px solid var(--primary);
-    border-left: 3px solid var(--primary);
-    border-right: 3px solid var(--primary);
+    border-bottom: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
     padding: var(--size-4);
-    transition: transform var(--transition-fast);
-}
-
-
-.sighting-card header {
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  
+  .sighting-card:hover {
+    box-shadow: var(--shadow-3);
+  }
+  
+  .sighting-card header {
     padding: 0;
     margin-bottom: var(--size-3);
-}
-
-.sighting-card h3 {
+  }
+  
+  .sighting-card h3 {
     margin: 0;
-}
-
-
-/* Tables */
-table {
+    color: var(--text-1);
+  }
+  
+  /* Tables */
+  table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     margin-bottom: var(--size-4);
-}
-
-table th, table td {
-    padding: var(--size-2);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  
+  table th, table td {
+    padding: var(--size-2) var(--size-3);
     text-align: left;
-    border-bottom: 1px solid var(--primary);
-}
-
-table th {
-    background-color: var(--card-background);
+  }
+  
+  table th {
+    background-color: var(--table-header-background);
+    color: var(--text-1);
     font-weight: var(--font-weight-6);
-    border-bottom: 2px solid var(--secondary);
-}
-
-th.asc::after {
+    border-bottom: 2px solid var(--primary);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  th.asc::after {
     content: " ▲";
     margin-left: 0.25rem;
     color: var(--primary);
@@ -136,77 +182,135 @@ th.asc::after {
     color: var(--primary);
   }
   
-
-table tbody tr:nth-child(odd) {
-    background-color: var(--surface-2);
-}
-
-table tbody tr {
-    background-color: var(--surface-2);
-}
-
-table tbody tr:hover {
-    background-color: var(--secondary-focus);
-}
-
-/* Table responsiveness */
-.table-responsive {
+  table td {
+    border-bottom: 1px solid var(--border);
+    color: var(--text-2);
+  }
+  
+  table tbody tr:nth-child(odd) {
+    background-color: var(--surface-1);
+  }
+  
+  table tbody tr:nth-child(even) {
+    background-color: var(--table-stripe);
+  }
+  
+  table tbody tr:hover {
+    background-color: var(--table-hover);
+  }
+  
+  /* Table responsiveness */
+  .table-responsive {
     overflow-x: auto;
     margin-bottom: var(--size-4);
-}
-
-@media (max-width: 768px) {
+    border-radius: var(--radius);
+  }
+  
+  @media (max-width: 768px) {
     .filters-container form .grid {
-        grid-template-columns: 1fr;
+      grid-template-columns: 1fr;
     }
-}
-
-
-
- /* Paginace */
-
-.pagination {
+    
+    table th, table td {
+      padding: var(--size-2) var(--size-2);
+    }
+  }
+  
+  /* Icon styling */
+  i.ph {
+    margin-right: var(--size-1);
+    vertical-align: -0.125em;
+    color: var(--primary);
+  }
+  
+  /* Pagination */
+  .pagination {
     display: flex;
     justify-content: center;
     gap: var(--size-2);
     list-style: none;
     padding: 0;
     margin-top: var(--size-4);
-}
-
-.pagination li {
+  }
+  
+  .pagination li {
     display: inline-block;
-}
-
-.pagination .button {
+  }
+  
+  .pagination .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: var(--size-2) var(--size-3);
     border-radius: var(--radius);
-    background-color: var(--secondary);
-    transition: background var(--transition-fast), color var(--transition-fast);
+    background-color: var(--surface-2);
+    color: var(--text-1);
+    transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
     text-decoration: none;
     min-width: 2.5rem;
     text-align: center;
-}
-
-.pagination .button:hover {
-    background: var(--secondary-hover);
-    color: var(--secondary-inverse);
-}
-
-.pagination .button.disabled {
+  }
+  
+  .pagination .button:hover {
+    background: var(--primary);
+    color: var(--primary-inverse);
+    transform: translateY(-2px);
+  }
+  
+  .pagination .button.disabled {
     opacity: 0.5;
     pointer-events: none;
     background-color: var(--background-muted);
     color: var(--text-muted);
-}
-
-.pagination .button.secondary {
+    transform: none;
+  }
+  
+  .pagination .button.secondary {
     background-color: var(--secondary);
     color: var(--secondary-inverse);
-}
-
-/* Pagination info text */
-
-.pagination-info {
-    margin-top: var(--size-6);
-}
+  }
+  
+  .pagination .button.accent {
+    background-color: var(--secondary);
+    color: var(--secondary-inverse);
+  }
+  
+  /* Pagination info text */
+  .pagination-info {
+    margin-top: var(--size-4);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: var(--font-size-1);
+  }
+  
+  /* Action buttons */
+  a[role="button"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--size-1) var(--size-2);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-1);
+    text-decoration: none;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+  }
+  
+  a[role="button"]:hover {
+    transform: translateY(-1px);
+  }
+  
+  /* Custom spacing utilities */
+  .mt-1 { margin-top: var(--size-1); }
+  .mt-2 { margin-top: var(--size-2); }
+  .mt-3 { margin-top: var(--size-3); }
+  .mt-4 { margin-top: var(--size-4); }
+  
+  .mb-1 { margin-bottom: var(--size-1); }
+  .mb-2 { margin-bottom: var(--size-2); }
+  .mb-3 { margin-bottom: var(--size-3); }
+  .mb-4 { margin-bottom: var(--size-4); }
+  
+  .p-1 { padding: var(--size-1); }
+  .p-2 { padding: var(--size-2); }
+  .p-3 { padding: var(--size-3); }
+  .p-4 { padding: var(--size-4); }

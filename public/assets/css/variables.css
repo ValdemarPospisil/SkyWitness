@@ -1,35 +1,114 @@
 /* Custom variables and color system for SkyWitness */
 
 :root {
-  --primary: #10b981;
-  --primary-hover: #34d399;
+  /* Primary colors - Jade */
+  --jade-50: #effef7;
+  --jade-100: #dafeee;
+  --jade-200: #b8f9dd;
+  --jade-300: #82f2c7;
+  --jade-400: #46e4ac;
+  --jade-500: #10b981; /* Main primary */
+  --jade-600: #0ea271;
+  --jade-700: #0f805c;
+  --jade-800: #11644a;
+  --jade-900: #11533e;
+  --jade-950: #053025;
+
+  /* Secondary colors - Yellow */
+  --yellow-50: #fefce8;
+  --yellow-100: #fef9c3;
+  --yellow-200: #fef08a;
+  --yellow-300: #fde047;
+  --yellow-400: #facc15;
+  --yellow-500: #eab308; /* Main secondary */
+  --yellow-600: #ca8a04;
+  --yellow-700: #a16207;
+  --yellow-800: #854d0e;
+  --yellow-900: #713f12;
+  --yellow-950: #422006;
+
+  /* Neutrals - Light mode */
+  --neutral-50: #f9fafb;
+  --neutral-100: #f3f4f6;
+  --neutral-200: #e5e7eb;
+  --neutral-300: #d1d5db;
+  --neutral-400: #9ca3af;
+  --neutral-500: #6b7280;
+  --neutral-600: #4b5563;
+  --neutral-700: #374151;
+  --neutral-800: #1f2937;
+  --neutral-900: #111827;
+  --neutral-950: #0d1117;
+
+  /* Primary theme */
+  --primary: var(--jade-500);
+  --primary-hover: var(--jade-400);
   --primary-focus: rgba(16, 185, 129, 0.25);
-  --primary-disabled: #a7f3d0;
+  --primary-disabled: var(--jade-200);
+  --primary-inverse: white;
 
-  --secondary: #fbbf24;
-  --secondary-hover: #fcd34d;
-  --secondary-focus: rgba(251, 191, 36, 0.25);
-  --secondary-disabled: #fde68a;
+  /* Secondary theme */
+  --secondary: var(--yellow-400);
+  --secondary-hover: var(--yellow-300);
+  --secondary-focus: rgba(234, 179, 8, 0.25);
+  --secondary-disabled: var(--yellow-200);
+  --secondary-inverse: var(--neutral-900);
 
-  --background: #e8e2d2;
-  --background-muted: #f5f1e5;
-  --card-background: #fefefe;
-  --table-header-background: #f2ecdc;
-  --hover-background: #eee9db;
+  /* Light theme backgrounds */
+  --background: #f5f6f3;
+  --background-muted: #e8e9e6;
+  --card-background: white;
+  --surface-1: white;
+  --surface-2: var(--neutral-100);
+  --surface-3: var(--neutral-200);
+  --table-header-background: var(--neutral-100);
+  --hover-background: #ecede9;
+  --table-stripe: rgba(16, 185, 129, 0.05);
+  --table-hover: rgba(16, 185, 129, 0.1);
+  
+  /* Text colors */
+  --text-1: var(--neutral-900);
+  --text-2: var(--neutral-700);
+  --text-muted: var(--neutral-500);
+  
+  /* Border colors */
+  --border: var(--neutral-200);
+  --border-size-1: 1px;
+  --border-size-2: 2px;
+  --border-focus: var(--jade-500);
 
-  --text: #1a1a1a;
-  --text-muted: #6b7280;
-
-  --border: #ccc;
-  --border-focus: #aaa;
-
+  /* Layout variables */
   --container-max-width: 1200px;
   --container-padding: 1rem;
   
+  /* Spacing */
+  --size-1: 0.25rem;
+  --size-2: 0.5rem;
+  --size-3: 0.75rem;
+  --size-4: 1rem;
+  --size-5: 1.5rem;
+  --size-6: 2rem;
+  --size-7: 3rem;
+  --size-8: 4rem;
+  
   /* Typography */
   --font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif;
+  --font-size-0: 0.75rem;
+  --font-size-1: 0.875rem;
+  --font-size-2: 1rem;
+  --font-size-3: 1.25rem;
+  --font-size-4: 1.5rem;
+  --font-size-5: 2rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-5: 500;
+  --font-weight-6: 600;
+  --font-weight-bold: 700;
   
   /* Border radius */
+  --radius-1: 0.25rem;
+  --radius-2: 0.5rem;
+  --radius-3: 0.75rem;
   --radius-sm: var(--radius-1);
   --radius: var(--radius-2);
   --radius-lg: var(--radius-3);
@@ -37,51 +116,101 @@
   /* Transitions */
   --transition-fast: 0.2s ease;
   --transition: 0.3s ease;
-
+  
+  /* Shadows */
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-3: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --card-box-shadow: var(--shadow-2);
 }
   
-  /* Dark mode */
-  :root[data-theme="dark"] {
-    --primary: #10b981;
-    --primary-hover: #36d399;
-    --primary-focus: rgba(16, 185, 129, 0.25);
-    --primary-disabled: #064e3b;
-  
-    --secondary: #fbbf24;
-    --secondary-hover: #fde68a;
-    --secondary-focus: rgba(251, 191, 36, 0.25);
-    --secondary-disabled: #92400e;
-  
-    --background: #1a1c1b;
-    --background-muted: #232624;
-    --card-background: #2a2d2b;
-    --table-header-background: #2f332f;
-    --hover-background: #3b403b;
-  
-    --text: #e6e6e6;
-    --text-muted: #a3a3a3;
-  
-    --border: #3f3f3f;
-    --border-focus: #5b5b5b;
-  }
-  
+/* Dark mode */
+:root[data-theme="dark"] {
+  /* Primary theme - dark mode */
+  --primary: var(--jade-400);
+  --primary-hover: var(--jade-300);
+  --primary-focus: rgba(70, 228, 172, 0.25);
+  --primary-disabled: var(--jade-800);
+  --primary-inverse: var(--neutral-900);
 
-  /* Utility classes */
-  .primary-bg {
-    background-color: var(--primary);
-    color: var(--primary-inverse);
-  }
+  /* Secondary theme - dark mode */
+  --secondary: var(--yellow-400);
+  --secondary-hover: var(--yellow-300);
+  --secondary-focus: rgba(250, 204, 21, 0.25);
+  --secondary-disabled: var(--yellow-800);
+  --secondary-inverse: var(--neutral-900);
+
+  /* Dark theme backgrounds */
+  --background: #121212;
+  --background-muted: #1e1e1e;
+  --card-background: #242424;
+  --surface-1: #242424;
+  --surface-2: #2a2a2a;
+  --surface-3: #333333;
+  --table-header-background: #1c1c1c;
+  --hover-background: #2c2c2c;
+  --table-stripe: rgba(70, 228, 172, 0.05);
+  --table-hover: rgba(70, 228, 172, 0.1);
   
-  .accent-bg {
-    background-color: var(--accent);
-    color: var(--accent-inverse);
-  }
+  /* Text colors - dark mode */
+  --text-1: #f3f4f6;
+  --text-2: #d1d5db;
+  --text-muted: #9ca3af;
   
-  .contrast-bg {
-    background-color: var(--contrast);
-    color: var(--contrast-inverse);
-  }
+  /* Border colors - dark mode */
+  --border: #333333;
+  --border-focus: var(--jade-400);
   
-  .text-muted {
-    color: var(--text-muted);
-  }
+  /* Shadows - dark mode */
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-2: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-3: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --card-box-shadow: var(--shadow-2);
+}
+  
+/* Utility classes */
+.primary-bg {
+  background-color: var(--primary);
+  color: var(--primary-inverse);
+}
+
+.secondary-bg {
+  background-color: var(--secondary);
+  color: var(--secondary-inverse);
+}
+
+.surface-1 {
+  background-color: var(--surface-1);
+}
+
+.surface-2 {
+  background-color: var(--surface-2);
+}
+
+.surface-3 {
+  background-color: var(--surface-3);
+}
+
+.text-1 {
+  color: var(--text-1);
+}
+
+.text-2 {
+  color: var(--text-2);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.shadow-1 {
+  box-shadow: var(--shadow-1);
+}
+
+.shadow-2 {
+  box-shadow: var(--shadow-2);
+}
+
+.shadow-3 {
+  box-shadow: var(--shadow-3);
+}
