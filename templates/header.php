@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/sightings.css">
+    <link rel="stylesheet" href="/assets/css/sighting-detail.css">
 </head>
 <body>
     <main class="container">
