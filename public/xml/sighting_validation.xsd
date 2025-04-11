@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  
+  <xs:element name="ufo-sightings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="sighting" type="sightingType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:complexType name="sightingType">
+    <xs:sequence>
+      <xs:element name="date-time" type="xs:dateTime"/>
+      <xs:element name="date-documented" type="xs:dateTime"/>
+      <xs:element name="year" type="xs:integer"/>
+      <xs:element name="month" type="xs:integer"/>
+      <xs:element name="hour" type="xs:integer"/>
+      <xs:element name="season" type="seasonType"/>
+      <xs:element name="country-code" type="xs:string"/>
+      <xs:element name="country" type="xs:string"/>
+      <xs:element name="region" type="xs:string"/>
+      <xs:element name="locale" type="xs:string"/>
+      <xs:element name="latitude" type="latitudeType"/>
+      <xs:element name="longitude" type="longitudeType"/>
+      <xs:element name="ufo-shape" type="xs:string"/>
+      <xs:element name="encounter-seconds" type="xs:integer"/>
+      <xs:element name="encounter-duration" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- Vlastní datové typy -->
+  <xs:simpleType name="seasonType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Spring"/>
+      <xs:enumeration value="Summer"/>
+      <xs:enumeration value="Autumn"/>
+      <xs:enumeration value="Winter"/>
+      <xs:enumeration value="Unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="latitudeType">
+    <xs:restriction base="xs:decimal">
+      <xs:minInclusive value="-90"/>
+      <xs:maxInclusive value="90"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="longitudeType">
+    <xs:restriction base="xs:decimal">
+      <xs:minInclusive value="-180"/>
+      <xs:maxInclusive value="180"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>
