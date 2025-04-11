@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize map
     initMap();
-    
+    initLeafletMap();
     // Initialize encounter timer
     initEncounterTimer();
 });
@@ -24,13 +24,45 @@ function initMap() {
     const mapWidth = mapImage.clientWidth;
     const mapHeight = mapImage.clientHeight;
 
+    const LAT_MIN = -59.90;
+    const LAT_MAX = 102.74;
+
+    const latitudeRange = LAT_MAX - LAT_MIN;
+    const y = ((LAT_MAX - latitude) / latitudeRange) * mapHeight;
     const x = ((longitude + 180) / 360) * mapWidth;
-    const y = ((90 - latitude) / 180) * mapHeight;
+
+    console.log(`lat: ${latitude}, lng: ${longitude}, x: ${x}, y: ${y}`);
+    console.log(`mapWidth: ${mapWidth}, mapHeight: ${mapHeight}`);
+
     
-    console.log(marker.getBoundingClientRect());
     marker.style.left = `${x}px`;
     marker.style.top = `${y}px`;
 }
+
+function initLeafletMap() {
+    const coordValues = document.querySelectorAll('.coord-value');
+    if (coordValues.length < 2) {
+        document.getElementById('leaflet-map').innerHTML = '<div class="map-error">Location coordinates not available</div>';
+        return;
+    }
+
+    const latitude = parseFloat(coordValues[0].textContent);
+    const longitude = parseFloat(coordValues[1].textContent);
+    if (isNaN(latitude) || isNaN(longitude)) return;
+
+    // Inicializace Leaflet mapy
+    const map = L.map('leaflet-map').setView([latitude, longitude], 4);
+
+    // Tile layer (OpenStreetMap)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Marker
+    const marker = L.marker([latitude, longitude]).addTo(map)
+        .bindPopup('Tady byl výskyt!')
+}
+
 
 
 function initEncounterTimer() {

@@ -77,6 +77,13 @@ include __DIR__.'/../templates/header.php';
                 <p><?= nl2br(htmlspecialchars($sighting['description'])) ?></p>
             </div>
         </div>
+
+        <!-- New Interactive Map Section -->
+        <div class="card interactive-map">
+            <h3>Interactive Map</h3>
+            <div id="leaflet-map" style="height: 500px; margin-top: 1rem;"></div>
+        </div>
+
         
         <!-- Map and coordinates -->
         <div class="card location-card">
@@ -92,7 +99,7 @@ include __DIR__.'/../templates/header.php';
                 </div>
             </div>
             <div id="sighting-map" class="image-map">
-                <img src="/assets/images/world-map.svg" alt="World Map">
+                <img src="/assets/images/MapChart_Map.png" alt="World Map">
                 <div class="marker" id="map-marker"></div>
             </div>
         </div>
