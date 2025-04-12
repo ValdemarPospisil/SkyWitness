@@ -20,6 +20,8 @@
     box-shadow: var(--card-box-shadow);
     padding: var(--size-4);
     height: 100%;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 .card h2 {
@@ -67,7 +69,7 @@ input[type="number"],
 input[type="datetime-local"],
 select,
 textarea {
-    width: 100%;
+    width: 50%;
     padding: var(--size-2);
     border: var(--border-size-1) solid var(--border);
     border-radius: var(--radius-1);

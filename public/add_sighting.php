@@ -20,11 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_xml'])) {
         
         try {
             // Validace XML podle XSD
-          //  $isValid = $xmlProcessor->validateXml($xmlFile, __DIR__.'/public/assets/xsd/ufo_sightings.xsd');
+            $isValid = $xmlProcessor->validateXml($xmlFile, __DIR__.'/xml/sighting_validation.xsd');
             
             if ($isValid) {
                 // Zpracování XML a uložení do databáze
-            //    $result = $xmlProcessor->processXmlFile($xmlFile);
+                $result = $xmlProcessor->processXmlFile($xmlFile);
                 $message['success'] = "XML soubor byl úspěšně zpracován. Přidáno $result záznamů.";
             } else {
                 $message['error'] = "XML soubor není validní podle XSD schématu.";
@@ -72,17 +72,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_form'])) {
     if (empty($errors)) {
         try {
             // Generování XML z dat formuláře
-           // $xml = $xmlProcessor->generateXmlFromFormData($formData);
+            $xml = $xmlProcessor->generateXmlFromFormData($formData);
             
             // Validace vygenerovaného XML
             $xmlFilePath = tempnam(sys_get_temp_dir(), 'ufo');
             file_put_contents($xmlFilePath, $xml);
             
-         //   $isValid = $xmlProcessor->validateXml($xmlFilePath, __DIR__.'/public/assets/xsd/ufo_sightings.xsd');
+            $isValid = $xmlProcessor->validateXml($xmlFilePath, __DIR__.'/xml/sighting_validation.xsd');
             
             if ($isValid) {
                 // Zpracování XML a uložení do databáze
-          //      $result = $xmlProcessor->processXml($xml);
+                $result = $xmlProcessor->processXml($xml);
                 $message['success'] = "Záznam byl úspěšně přidán přes formulář.";
             } else {
                 $message['error'] = "Vygenerované XML není validní podle XSD schématu.";
@@ -106,7 +106,7 @@ include __DIR__.'/../templates/header.php';
 ?>
 
 <div class="container mt-4">
-    <h1><i class="ph ph-code"></i> XML Operace</h1>
+    <h2><i class="ph ph-file-plus"></i>Add a sighting</h2>
     
     <?php if (isset($message['success'])): ?>
         <div class="alert alert-success">
@@ -124,7 +124,7 @@ include __DIR__.'/../templates/header.php';
         <!-- XML Upload Section -->
         <div class="card">
             <h2>Nahrát pozorování přes XML</h2>
-            <p>Nahrajte XML soubor s pozorováními UFO. Soubor musí být validní podle <a href="/assets/xsd/ufo_sightings.xsd" target="_blank">tohoto XSD schématu</a>.</p>
+            <p>Nahrajte XML soubor s pozorováními UFO. Soubor musí být validní podle <a href="/xml/sighting_validation.xsd" target="_blank">tohoto XSD schématu</a>.</p>
             
             <form method="POST" enctype="multipart/form-data" class="xml-upload-form">
                 <div class="form-group">
@@ -282,64 +282,7 @@ include __DIR__.'/../templates/header.php';
     </div>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Tab functionality
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabPanes = document.querySelectorAll('.tab-pane');
-    
-    tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            tabButtons.forEach(b => b.classList.remove('active'));
-            // Add active class to clicked button
-            this.classList.add('active');
-            
-            // Hide all panes
-            tabPanes.forEach(pane => pane.classList.remove('active'));
-            // Show selected pane
-            document.getElementById(this.dataset.tab).classList.add('active');
-        });
-    });
-    
-    // Auto-fill year, month, hour from datetime
-    const dateTimeInput = document.getElementById('date_time');
-    const yearInput = document.getElementById('year');
-    const monthInput = document.getElementById('month');
-    const hourInput = document.getElementById('hour');
-    
-    dateTimeInput.addEventListener('change', function() {
-        if (this.value) {
-            const dateObj = new Date(this.value);
-            yearInput.value = dateObj.getFullYear();
-            monthInput.value = dateObj.getMonth() + 1; // +1 because getMonth() returns 0-11
-            hourInput.value = dateObj.getHours();
-        }
-    });
-    
-    // Calculate encounter duration text from seconds
-    const secondsInput = document.getElementById('encounter_seconds');
-    const durationInput = document.getElementById('encounter_duration');
-    
-    secondsInput.addEventListener('change', function() {
-        if (this.value) {
-            const seconds = parseInt(this.value);
-            if (seconds < 60) {
-                durationInput.value = seconds + " seconds";
-            } else if (seconds < 3600) {
-                const minutes = Math.floor(seconds / 60);
-                const remainingSeconds = seconds % 60;
-                durationInput.value = minutes + " minute" + (minutes > 1 ? "s" : "") + 
-                    (remainingSeconds > 0 ? " " + remainingSeconds + " second" + (remainingSeconds > 1 ? "s" : "") : "");
-            } else {
-                const hours = Math.floor(seconds / 3600);
-                const remainingMinutes = Math.floor((seconds % 3600) / 60);
-                durationInput.value = hours + " hour" + (hours > 1 ? "s" : "") + 
-                    (remainingMinutes > 0 ? " " + remainingMinutes + " minute" + (remainingMinutes > 1 ? "s" : "") : "");
-            }
-        }
-    });
-});
-</script>
+<!-- JavaScript reference -->
+<script src="/assets/js/add-sighting.js"></script>
 
 <?php include __DIR__.'/../templates/footer.php'; ?>

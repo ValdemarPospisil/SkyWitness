@@ -1,27 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sightings>
-    <sighting id="1">
-        <title>Bright lights over Prague</title>
-        <date>2023-05-15</date>
-        <location>Prague, Czech Republic</location>
+<ufo-sightings>
+    <sighting>
+        <date-time>2023-05-15T21:30:00</date-time>
+        <date-documented>2023-05-16T10:15:00</date-documented>
+        <year>2023</year>
+        <month>5</month>
+        <hour>21</hour>
+        <season>Spring</season>
+        <country-code>CZ</country-code>
         <country>Czech Republic</country>
-        <ufo_shape>Cylinder</ufo_shape>
+        <region>Prague</region>
+        <locale>Old Town</locale>
+        <latitude>50.0875</latitude>
+        <longitude>14.4213</longitude>
+        <ufo-shape>Cylinder</ufo-shape>
+        <encounter-seconds>300</encounter-seconds>
+        <encounter-duration>5 minutes</encounter-duration>
         <description>Three bright lights forming a triangle pattern moving silently across the sky.</description>
     </sighting>
-    <sighting id="2">
-        <title>Strange object near Brno</title>
-        <date>2023-06-22</date>
-        <location>Brno, Czech Republic</location>
+    <sighting>
+        <date-time>2023-06-22T23:15:00</date-time>
+        <date-documented>2023-06-23T08:45:00</date-documented>
+        <year>2023</year>
+        <month>6</month>
+        <hour>23</hour>
+        <season>Summer</season>
+        <country-code>CZ</country-code>
         <country>Czech Republic</country>
-        <ufo_shape>Disk</ufo_shape>
+        <region>South Moravia</region>
+        <locale>Brno</locale>
+        <latitude>49.1951</latitude>
+        <longitude>16.6068</longitude>
+        <ufo-shape>Disk</ufo-shape>
+        <encounter-seconds>600</encounter-seconds>
+        <encounter-duration>10 minutes</encounter-duration>
         <description>Disk-shaped object hovering for about 10 minutes before disappearing suddenly.</description>
     </sighting>
-    <sighting id="3">
-        <title>Lights over Texas</title>
-        <date>2023-04-10</date>
-        <location>Texas, USA</location>
+    <sighting>
+        <date-time>2023-04-10T22:05:00</date-time>
+        <date-documented>2023-04-11T09:30:00</date-documented>
+        <year>2023</year>
+        <month>4</month>
+        <hour>22</hour>
+        <season>Spring</season>
+        <country-code>US</country-code>
         <country>United States</country>
-        <ufo_shape>Light</ufo_shape>
-        <description>Multiple lights moving in formation.</description>
+        <region>Texas</region>
+        <locale>Austin</locale>
+        <latitude>30.2672</latitude>
+        <longitude>-97.7431</longitude>
+        <ufo-shape>Light</ufo-shape>
+        <encounter-seconds>450</encounter-seconds>
+        <encounter-duration>7 minutes 30 seconds</encounter-duration>
+        <description>Multiple lights moving in formation across the night sky.</description>
     </sighting>
-</sightings>
+</ufo-sightings>
