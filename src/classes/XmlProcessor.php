@@ -81,7 +81,7 @@ class XmlProcessor {
                 'description' => (string)$sighting->description
             ];
             
-            // SQL pro vložení dat
+            // SQL pro vložení dat - odstraněno ID pole, aby se vygenerovalo automaticky
             $sql = "INSERT INTO ufo_sightings (
                 date_time, date_documented, year, month, hour, season, 
                 country_code, country, region, locale, latitude, longitude, 
@@ -108,6 +108,17 @@ class XmlProcessor {
     public function generateXmlFromFormData($formData) {
         $dateTime = new DateTime($formData['date_time']);
         $now = new DateTime();
+        
+        // Pokud year, month nebo hour nejsou nastaveny, doplníme je z datumu
+        if (empty($formData['year'])) {
+            $formData['year'] = $dateTime->format('Y');
+        }
+        if (empty($formData['month'])) {
+            $formData['month'] = $dateTime->format('n');
+        }
+        if (empty($formData['hour'])) {
+            $formData['hour'] = $dateTime->format('G');
+        }
         
         $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><ufo-sightings></ufo-sightings>');
         $sighting = $xml->addChild('sighting');

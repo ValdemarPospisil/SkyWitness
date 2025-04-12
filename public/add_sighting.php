@@ -9,7 +9,7 @@ $db = new Database(DB_HOST, DB_NAME, DB_USER, DB_PASSWORD);
 $ufoSighting = new UfoSighting($db);
 $xmlProcessor = new XmlProcessor($db);
 
-$title = "SkyWitness - XML Operations";
+$title = "SkyWitness - Add New Sighting";
 $message = [];
 $formData = [];
 
@@ -84,6 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_form'])) {
                 // Zpracování XML a uložení do databáze
                 $result = $xmlProcessor->processXml($xml);
                 $message['success'] = "Záznam byl úspěšně přidán přes formulář.";
+                // Vyčistit formulář po úspěšném odeslání
+                $formData = [];
             } else {
                 $message['error'] = "Vygenerované XML není validní podle XSD schématu.";
             }
@@ -106,7 +108,7 @@ include __DIR__.'/../templates/header.php';
 ?>
 
 <div class="container mt-4">
-    <h2><i class="ph ph-file-plus"></i>Add a sighting</h2>
+    <h2><i class="ph ph-file-plus"></i> Add a sighting</h2>
     
     <?php if (isset($message['success'])): ?>
         <div class="alert alert-success">
@@ -121,25 +123,32 @@ include __DIR__.'/../templates/header.php';
     <?php endif; ?>
     
     <div class="xml-operations-grid">
-        <!-- XML Upload Section -->
+    <!-- XML Upload Section -->
         <div class="card">
             <h2>Nahrát pozorování přes XML</h2>
             <p>Nahrajte XML soubor s pozorováními UFO. Soubor musí být validní podle <a href="/xml/sighting_validation.xsd" target="_blank">tohoto XSD schématu</a>.</p>
             
             <form method="POST" enctype="multipart/form-data" class="xml-upload-form">
-                <div class="form-group">
-                    <label for="xml_file">XML Soubor:</label>
-                    <input type="file" name="xml_file" id="xml_file" accept=".xml" required>
+            <div class="form-group file-upload-container">
+                <label for="xml_file">XML Soubor:</label>
+                <div class="file-input-wrapper">
+                    <div class="custom-file-upload">
+                        <i class="ph ph-cloud-arrow-up"></i>
+                        <span id="file-name">Klikněte pro výběr souboru</span>
+                        <small>Nebo přetáhněte soubor sem</small>
+                        <input type="file" name="xml_file" id="xml_file" accept=".xml" required>
+                    </div>
                 </div>
-                
-                <div class="xml-preview">
-                    <h3>Náhled XML struktury:</h3>
-                    <pre class="xml-example"><?= htmlspecialchars(file_get_contents(__DIR__.'/xml/ufo_sightings.xml')) ?></pre>
+                <div id="file-selected-info" class="file-selected-info" style="display: none;">
+                    <i class="ph ph-check-circle"></i>
+                    <span>Vybraný soubor: </span>
+                    <strong id="selected-file-name"></strong>
                 </div>
-                
+            </div>
                 <button type="submit" name="submit_xml" class="btn btn-primary">
                     <i class="ph ph-upload"></i> Nahrát XML
                 </button>
+                
             </form>
         </div>
         
@@ -244,31 +253,46 @@ include __DIR__.'/../templates/header.php';
         </div>
     </div>
     
-    <div class="card mt-4">
-        <h2>XML/XSD Reference</h2>
+    <div class="card mt-4 user-guide-card">
+        <h2>Průvodce uživatele</h2>
         
         <div class="tabs">
             <div class="tab-header">
-                <button class="tab-btn active" data-tab="xml-schema">XML Schéma</button>
-                <button class="tab-btn" data-tab="xsd-schema">XSD Schéma</button>
-                <button class="tab-btn" data-tab="xml-info">XML Info</button>
+                <button class="tab-btn active" data-tab="guide-tab">Jak vložit pozorování</button>
+                <button class="tab-btn" data-tab="faq-tab">Často kladené otázky</button>
+                <button class="tab-btn" data-tab="xml-info">O XML formátu</button>
             </div>
             
             <div class="tab-content">
-                <div class="tab-pane active" id="xml-schema">
-                    <h3>Příklad validního XML</h3>
-                    <pre class="code-block"><?= htmlspecialchars(file_get_contents(__DIR__.'/xml/ufo_sightings.xml')) ?></pre>
+                <div class="tab-pane active" id="guide-tab">
+                    <h3>Jak přidat nové pozorování UFO</h3>
+                    <p>Pro přidání nového pozorování máte dvě možnosti:</p>
+                    <ol>
+                        <li><strong>Pomocí formuláře</strong> - Jednoduše vyplňte formulář vpravo. Všechna povinná pole jsou označena a systém vás upozorní, pokud něco chybí.</li>
+                        <li><strong>Nahrání XML souboru</strong> - Pokud máte data v XML formátu, můžete je nahrát přímo. XML musí odpovídat schématu uvedenému v dokumentaci.</li>
+                    </ol>
+                    <p>Po úspěšném přidání uvidíte potvrzující zprávu a záznam bude přidán do databáze.</p>
                 </div>
                 
-                <div class="tab-pane" id="xsd-schema">
-                    <h3>XSD Schéma pro validaci</h3>
-                    <pre class="code-block"><?= htmlspecialchars(file_get_contents(__DIR__.'/xml/sighting_validation.xsd')) ?></pre>
+                <div class="tab-pane" id="faq-tab">
+                    <h3>Často kladené otázky</h3>
+                    <div class="faq-item">
+                        <h4>Jaké údaje jsou povinné?</h4>
+                        <p>Povinné jsou: datum a čas, země, souřadnice (zeměpisná šířka a délka), tvar UFO, doba setkání a popis.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>Jak určit přesné souřadnice místa?</h4>
+                        <p>Můžete použít Google Maps nebo jinou mapovou službu k získání přesných souřadnic. Klikněte pravým tlačítkem na místo a vyberte "Co je tady?"</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>Co když neznám přesný tvar UFO?</h4>
+                        <p>Vyberte nejbližší možnost nebo "unknown" pokud si nejste jisti.</p>
+                    </div>
                 </div>
                 
                 <div class="tab-pane" id="xml-info">
-                    <h3>Jak funguje XML Validace</h3>
-                    <p>Nahrané XML soubory jsou validovány proti XSD schématu před zpracováním. Toto zajišťuje správnost dat před jejich uložením do databáze.</p>
-                    <p>Pro formulářová data je nejprve vygenerováno XML, které je následně validováno proti stejnému schématu.</p>
+                    <h3>O XML formátu</h3>
+                    <p>XML (eXtensible Markup Language) je formát používaný k ukládání a přenosu strukturovaných dat.</p>
                     <p>Výhody použití XML:</p>
                     <ul>
                         <li>Standardizovaný formát pro výměnu dat</li>
@@ -276,6 +300,7 @@ include __DIR__.'/../templates/header.php';
                         <li>Čitelnost pro člověka i stroj</li>
                         <li>Snadná konverze do jiných formátů</li>
                     </ul>
+                    <p>Náš systém používá XML ke standardizaci dat o pozorováních UFO. Všechna data jsou validována proti XSD schématu, což zajišťuje konzistenci a správnost.</p>
                 </div>
             </div>
         </div>

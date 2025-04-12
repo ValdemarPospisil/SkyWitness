@@ -45,7 +45,7 @@
                 <ul>
                     <li><a href="/"><i class="ph ph-house"></i> Home</a></li>
                     <li><a href="/sightings.php"><i class="ph ph-binoculars"></i> Sightings</a></li>
-                    <li><a href="/xml-operations.php"><i class="ph ph-code"></i> XML Tools</a></li>
+                    <li><a href="/add_sighting.php"><i class="ph ph-code"></i> Add a Sighting</a></li>
                 </ul>
             </nav>
             

@@ -63,7 +63,31 @@ function initLeafletMap() {
         .bindPopup('Tady byl výskyt!')
 }
 
-
+document.getElementById('xml_file').addEventListener('change', function(e) {
+    const fileNameSpan = document.getElementById('file-name');
+    const selectedFileInfo = document.getElementById('file-selected-info');
+    const selectedFileName = document.getElementById('selected-file-name');
+    
+    if (this.files.length > 0) {
+        // Pokud byl vybrán soubor
+        const fileName = this.files[0].name;
+        fileNameSpan.textContent = fileName;
+        selectedFileName.textContent = fileName;
+        selectedFileInfo.style.display = 'flex';
+        
+        // Změna stylu upload boxu
+        document.querySelector('.custom-file-upload').style.borderColor = 'var(--success)';
+        document.querySelector('.custom-file-upload i').style.color = 'var(--success)';
+    } else {
+        // Pokud nebyl vybrán žádný soubor
+        fileNameSpan.textContent = 'Klikněte pro výběr souboru';
+        selectedFileInfo.style.display = 'none';
+        
+        // Vrátíme původní styl
+        document.querySelector('.custom-file-upload').style.borderColor = 'var(--border)';
+        document.querySelector('.custom-file-upload i').style.color = 'var(--text-2)';
+    }
+});
 
 function initEncounterTimer() {
     const timerDisplay = document.getElementById('timer-display');
