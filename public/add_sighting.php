@@ -13,33 +13,33 @@ $title = "SkyWitness - Add New Sighting";
 $message = [];
 $formData = [];
 
-// Zpracování nahrání XML souboru
+// Processing XML file upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_xml'])) {
     if (isset($_FILES['xml_file']) && $_FILES['xml_file']['error'] === UPLOAD_ERR_OK) {
         $xmlFile = $_FILES['xml_file']['tmp_name'];
         
         try {
-            // Validace XML podle XSD
+            // Validate XML against XSD
             $isValid = $xmlProcessor->validateXml($xmlFile, __DIR__.'/xml/sighting_validation.xsd');
             
             if ($isValid) {
-                // Zpracování XML a uložení do databáze
+                // Process XML and save to database
                 $result = $xmlProcessor->processXmlFile($xmlFile);
-                $message['success'] = "XML soubor byl úspěšně zpracován. Přidáno $result záznamů.";
+                $message['success'] = "XML file successfully processed. $result records added.";
             } else {
-                $message['error'] = "XML soubor není validní podle XSD schématu.";
+                $message['error'] = "XML file is not valid according to the XSD schema.";
             }
         } catch (Exception $e) {
-            $message['error'] = "Chyba při zpracování XML: " . $e->getMessage();
+            $message['error'] = "Error processing XML: " . $e->getMessage();
         }
     } else {
-        $message['error'] = "Nepodařilo se nahrát soubor. Zkontrolujte typ a velikost souboru.";
+        $message['error'] = "Failed to upload file. Check file type and size.";
     }
 }
 
-// Zpracování HTML formuláře
+// Processing HTML form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_form'])) {
-    // Získání dat z formuláře
+    // Get form data
     $formData = [
         'date_time' => $_POST['date_time'] ?? '',
         'year' => $_POST['year'] ?? '',
@@ -58,49 +58,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_form'])) {
         'description' => $_POST['description'] ?? ''
     ];
     
-    // Validace formuláře
+    // Form validation
     $errors = [];
-    if (empty($formData['date_time'])) $errors[] = "Datum a čas jsou povinné.";
-    if (empty($formData['country'])) $errors[] = "Země je povinná.";
+    if (empty($formData['date_time'])) $errors[] = "Date and time are required.";
+    if (empty($formData['country'])) $errors[] = "Country is required.";
     if (!is_numeric($formData['latitude']) || $formData['latitude'] < -90 || $formData['latitude'] > 90) {
-        $errors[] = "Neplatná hodnota zeměpisné šířky.";
+        $errors[] = "Invalid latitude value.";
     }
     if (!is_numeric($formData['longitude']) || $formData['longitude'] < -180 || $formData['longitude'] > 180) {
-        $errors[] = "Neplatná hodnota zeměpisné délky.";
+        $errors[] = "Invalid longitude value.";
     }
     
     if (empty($errors)) {
         try {
-            // Generování XML z dat formuláře
+            // Generate XML from form data
             $xml = $xmlProcessor->generateXmlFromFormData($formData);
             
-            // Validace vygenerovaného XML
+            // Validate generated XML
             $xmlFilePath = tempnam(sys_get_temp_dir(), 'ufo');
             file_put_contents($xmlFilePath, $xml);
             
             $isValid = $xmlProcessor->validateXml($xmlFilePath, __DIR__.'/xml/sighting_validation.xsd');
             
             if ($isValid) {
-                // Zpracování XML a uložení do databáze
+                // Process XML and save to database
                 $result = $xmlProcessor->processXml($xml);
-                $message['success'] = "Záznam byl úspěšně přidán přes formulář.";
-                // Vyčistit formulář po úspěšném odeslání
+                $message['success'] = "Record successfully added via form.";
+                // Clear form after successful submission
                 $formData = [];
             } else {
-                $message['error'] = "Vygenerované XML není validní podle XSD schématu.";
+                $message['error'] = "Generated XML is not valid according to the XSD schema.";
             }
             
-            // Odstranění dočasného souboru
+            // Remove temporary file
             unlink($xmlFilePath);
         } catch (Exception $e) {
-            $message['error'] = "Chyba při zpracování formuláře: " . $e->getMessage();
+            $message['error'] = "Error processing form: " . $e->getMessage();
         }
     } else {
         $message['error'] = implode(' ', $errors);
     }
 }
 
-// Získání seznamu dostupných tvarů UFO a sezón pro formulář
+// Get list of available UFO shapes and seasons for the form
 $ufoShapes = $ufoSighting->getDistinctValues('ufo_shape');
 $seasons = $ufoSighting->getDistinctValues('season');
 
@@ -108,7 +108,10 @@ include __DIR__.'/../templates/header.php';
 ?>
 
 <div class="container mt-4">
-    <h2><i class="ph ph-file-plus"></i> Add a sighting</h2>
+    <header class="page-header">
+        <h2><i class="ph ph-file-plus"></i> Add a Sighting</h2>
+        <p>Contribute to our database by reporting your UFO sightings. You can either fill out the form or upload an XML file.</p>
+    </header>
     
     <?php if (isset($message['success'])): ?>
         <div class="alert alert-success">
@@ -125,49 +128,48 @@ include __DIR__.'/../templates/header.php';
     <div class="xml-operations-grid">
     <!-- XML Upload Section -->
         <div class="card">
-            <h2>Nahrát pozorování přes XML</h2>
-            <p>Nahrajte XML soubor s pozorováními UFO. Soubor musí být validní podle <a href="/xml/sighting_validation.xsd" target="_blank">tohoto XSD schématu</a>.</p>
+            <h2>Upload Sighting via XML</h2>
+            <p>Upload an XML file with UFO sightings. The file must be valid according to <a href="/xml/sighting_validation.xsd" target="_blank">this XSD schema</a>.</p>
             
             <form method="POST" enctype="multipart/form-data" class="xml-upload-form">
-            <div class="form-group file-upload-container">
-                <label for="xml_file">XML Soubor:</label>
-                <div class="file-input-wrapper">
-                    <div class="custom-file-upload">
-                        <i class="ph ph-cloud-arrow-up"></i>
-                        <span id="file-name">Klikněte pro výběr souboru</span>
-                        <small>Nebo přetáhněte soubor sem</small>
-                        <input type="file" name="xml_file" id="xml_file" accept=".xml" required>
+                <div class="form-group file-upload-container">
+                    <label for="xml_file">XML File:</label>
+                    <div class="file-input-wrapper">
+                        <div class="custom-file-upload">
+                            <i class="ph ph-cloud-arrow-up"></i>
+                            <span id="file-name">Click to select a file</span>
+                            <small>Or drag and drop file here</small>
+                            <input type="file" name="xml_file" id="xml_file" accept=".xml" required>
+                        </div>
+                    </div>
+                    <div id="file-selected-info" class="file-selected-info" style="display: none;">
+                        <i class="ph ph-check-circle"></i>
+                        <span>Selected file: </span>
+                        <strong id="selected-file-name"></strong>
                     </div>
                 </div>
-                <div id="file-selected-info" class="file-selected-info" style="display: none;">
-                    <i class="ph ph-check-circle"></i>
-                    <span>Vybraný soubor: </span>
-                    <strong id="selected-file-name"></strong>
-                </div>
-            </div>
                 <button type="submit" name="submit_xml" class="btn btn-primary">
-                    <i class="ph ph-upload"></i> Nahrát XML
+                    <i class="ph ph-upload"></i> Upload XML
                 </button>
-                
             </form>
         </div>
         
         <!-- HTML Form Section -->
         <div class="card">
-            <h2>Přidat nové pozorování</h2>
-            <p>Vyplňte formulář pro přidání nového pozorování UFO. Data budou konvertována do XML a validována před uložením.</p>
+            <h2>Add New Sighting</h2>
+            <p>Fill out the form to add a new UFO sighting. The data will be converted to XML and validated before saving.</p>
             
             <form method="POST" class="sighting-form">
                 <div class="form-group">
-                    <label for="date_time">Datum a čas pozorování:</label>
+                    <label for="date_time">Date and Time of Sighting:</label>
                     <input type="datetime-local" name="date_time" id="date_time" value="<?= htmlspecialchars($formData['date_time'] ?? '') ?>" required>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="ufo_shape">Tvar UFO:</label>
+                        <label for="ufo_shape">UFO Shape:</label>
                         <select name="ufo_shape" id="ufo_shape" required>
-                            <option value="">-- Vyberte tvar --</option>
+                            <option value="">-- Select shape --</option>
                             <?php foreach ($ufoShapes as $shape): ?>
                                 <option value="<?= htmlspecialchars($shape) ?>" <?= ($formData['ufo_shape'] ?? '') === $shape ? 'selected' : '' ?>>
                                     <?= htmlspecialchars($shape) ?>
@@ -177,9 +179,9 @@ include __DIR__.'/../templates/header.php';
                     </div>
                     
                     <div class="form-group">
-                        <label for="season">Roční období:</label>
+                        <label for="season">Season:</label>
                         <select name="season" id="season" required>
-                            <option value="">-- Vyberte období --</option>
+                            <option value="">-- Select season --</option>
                             <?php foreach ($seasons as $season): ?>
                                 <option value="<?= htmlspecialchars($season) ?>" <?= ($formData['season'] ?? '') === $season ? 'selected' : '' ?>>
                                     <?= htmlspecialchars($season) ?>
@@ -191,12 +193,12 @@ include __DIR__.'/../templates/header.php';
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="country">Země:</label>
+                        <label for="country">Country:</label>
                         <input type="text" name="country" id="country" value="<?= htmlspecialchars($formData['country'] ?? '') ?>" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="country_code">Kód země:</label>
+                        <label for="country_code">Country Code:</label>
                         <input type="text" name="country_code" id="country_code" value="<?= htmlspecialchars($formData['country_code'] ?? '') ?>" maxlength="6">
                     </div>
                 </div>
@@ -208,37 +210,37 @@ include __DIR__.'/../templates/header.php';
                     </div>
                     
                     <div class="form-group">
-                        <label for="locale">Lokalita:</label>
+                        <label for="locale">Locality:</label>
                         <input type="text" name="locale" id="locale" value="<?= htmlspecialchars($formData['locale'] ?? '') ?>">
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="latitude">Zeměpisná šířka:</label>
+                        <label for="latitude">Latitude:</label>
                         <input type="number" name="latitude" id="latitude" step="0.00000001" min="-90" max="90" value="<?= htmlspecialchars($formData['latitude'] ?? '') ?>" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="longitude">Zeměpisná délka:</label>
+                        <label for="longitude">Longitude:</label>
                         <input type="number" name="longitude" id="longitude" step="0.00000001" min="-180" max="180" value="<?= htmlspecialchars($formData['longitude'] ?? '') ?>" required>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="encounter_seconds">Doba setkání (sekundy):</label>
+                        <label for="encounter_seconds">Encounter Duration (seconds):</label>
                         <input type="number" name="encounter_seconds" id="encounter_seconds" min="1" value="<?= htmlspecialchars($formData['encounter_seconds'] ?? '') ?>" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="encounter_duration">Doba setkání (text):</label>
+                        <label for="encounter_duration">Encounter Duration (text):</label>
                         <input type="text" name="encounter_duration" id="encounter_duration" value="<?= htmlspecialchars($formData['encounter_duration'] ?? '') ?>" required>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="description">Popis pozorování:</label>
+                    <label for="description">Sighting Description:</label>
                     <textarea name="description" id="description" rows="5" required><?= htmlspecialchars($formData['description'] ?? '') ?></textarea>
                 </div>
                 
@@ -247,7 +249,7 @@ include __DIR__.'/../templates/header.php';
                 <input type="hidden" name="hour" id="hour" value="">
                 
                 <button type="submit" name="submit_form" class="btn btn-primary">
-                    <i class="ph ph-floppy-disk"></i> Uložit pozorování
+                    <i class="ph ph-floppy-disk"></i> Save Sighting
                 </button>
             </form>
         </div>
