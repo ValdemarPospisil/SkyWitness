@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ufo-sightings>
+    <sighting>
+        <date-time>2023-07-15T22:45:00</date-time>
+        <date-documented>2023-07-16T09:30:00</date-documented>
+        <year>2023</year>
+        <month>7</month>
+        <hour>22</hour>
+        <season>Summer</season>
+        <country-code>US</country-code>
+        <country>United States</country>
+        <region>Nevada</region>
+        <locale>Las Vegas</locale>
+        <latitude>36.1699</latitude>
+        <longitude>-115.1398</longitude>
+        <ufo-shape>Triangle</ufo-shape>
+        <encounter-seconds>180</encounter-seconds>
+        <encounter-duration>3 minutes</encounter-duration>
+        <description>Triangular object with bright lights at each corner, hovering silently before rapidly ascending.</description>
+    </sighting>
+</ufo-sightings>

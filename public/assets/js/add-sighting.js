@@ -54,4 +54,64 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+    
+    // File upload handling - showing selected file name
+    const fileInput = document.getElementById('xml_file');
+    const fileNameSpan = document.getElementById('file-name');
+    const selectedFileNameSpan = document.getElementById('selected-file-name');
+    const fileSelectedInfo = document.getElementById('file-selected-info');
+    const customFileUpload = document.querySelector('.custom-file-upload');
+    
+    fileInput.addEventListener('change', function() {
+        if (this.files && this.files.length > 0) {
+            selectedFileNameSpan.textContent = this.files[0].name;
+            fileSelectedInfo.style.display = 'flex';
+            customFileUpload.classList.add('file-selected');
+            fileNameSpan.textContent = 'File selected';
+        } else {
+            fileSelectedInfo.style.display = 'none';
+            customFileUpload.classList.remove('file-selected');
+            fileNameSpan.textContent = 'Click to select a file';
+        }
+    });
+    
+    // Drag and drop functionality
+    const dropZone = document.querySelector('.custom-file-upload');
+    
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, highlight, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, unhighlight, false);
+    });
+    
+    function highlight() {
+        dropZone.classList.add('highlight');
+    }
+    
+    function unhighlight() {
+        dropZone.classList.remove('highlight');
+    }
+    
+    dropZone.addEventListener('drop', handleDrop, false);
+    
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        fileInput.files = files;
+        
+        // Trigger change event manually
+        const event = new Event('change');
+        fileInput.dispatchEvent(event);
+    }
 });

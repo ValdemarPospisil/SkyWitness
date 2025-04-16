@@ -13,8 +13,6 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-
-
     <!-- Open Props Core -->
     <link rel="stylesheet" href="https://unpkg.com/open-props"/>
     

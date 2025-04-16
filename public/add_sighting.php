@@ -256,53 +256,60 @@ include __DIR__.'/../templates/header.php';
     </div>
     
     <div class="card mt-4 user-guide-card">
-        <h2>Průvodce uživatele</h2>
+        <h2>User Guide</h2>
         
         <div class="tabs">
             <div class="tab-header">
-                <button class="tab-btn active" data-tab="guide-tab">Jak vložit pozorování</button>
-                <button class="tab-btn" data-tab="faq-tab">Často kladené otázky</button>
-                <button class="tab-btn" data-tab="xml-info">O XML formátu</button>
+                <button class="tab-btn active" data-tab="guide-tab">How to Add a Sighting</button>
+                <button class="tab-btn" data-tab="faq-tab">Frequently Asked Questions</button>
+                <button class="tab-btn" data-tab="xml-info">About XML Format</button>
+                <button class="tab-btn" data-tab="xml-example">XML Example</button>
             </div>
             
             <div class="tab-content">
                 <div class="tab-pane active" id="guide-tab">
-                    <h3>Jak přidat nové pozorování UFO</h3>
-                    <p>Pro přidání nového pozorování máte dvě možnosti:</p>
+                    <h3>How to Add a New UFO Sighting</h3>
+                    <p>You have two options for adding a new sighting:</p>
                     <ol>
-                        <li><strong>Pomocí formuláře</strong> - Jednoduše vyplňte formulář vpravo. Všechna povinná pole jsou označena a systém vás upozorní, pokud něco chybí.</li>
-                        <li><strong>Nahrání XML souboru</strong> - Pokud máte data v XML formátu, můžete je nahrát přímo. XML musí odpovídat schématu uvedenému v dokumentaci.</li>
+                        <li><strong>Using the form</strong> - Simply fill out the form on the right. All required fields are marked, and the system will alert you if anything is missing.</li>
+                        <li><strong>Uploading an XML file</strong> - If you have data in XML format, you can upload it directly. The XML must conform to the schema described in the documentation.</li>
                     </ol>
-                    <p>Po úspěšném přidání uvidíte potvrzující zprávu a záznam bude přidán do databáze.</p>
+                    <p>After a successful submission, you'll see a confirmation message and the record will be added to the database.</p>
                 </div>
                 
                 <div class="tab-pane" id="faq-tab">
-                    <h3>Často kladené otázky</h3>
+                    <h3>Frequently Asked Questions</h3>
                     <div class="faq-item">
-                        <h4>Jaké údaje jsou povinné?</h4>
-                        <p>Povinné jsou: datum a čas, země, souřadnice (zeměpisná šířka a délka), tvar UFO, doba setkání a popis.</p>
+                        <h4>Which fields are required?</h4>
+                        <p>Required fields are: date and time, country, coordinates (latitude and longitude), UFO shape, encounter duration, and description.</p>
                     </div>
                     <div class="faq-item">
-                        <h4>Jak určit přesné souřadnice místa?</h4>
-                        <p>Můžete použít Google Maps nebo jinou mapovou službu k získání přesných souřadnic. Klikněte pravým tlačítkem na místo a vyberte "Co je tady?"</p>
+                        <h4>How to determine exact location coordinates?</h4>
+                        <p>You can use Google Maps or another mapping service to get precise coordinates. Right-click on the location and select "What's here?"</p>
                     </div>
                     <div class="faq-item">
-                        <h4>Co když neznám přesný tvar UFO?</h4>
-                        <p>Vyberte nejbližší možnost nebo "unknown" pokud si nejste jisti.</p>
+                        <h4>What if I don't know the exact UFO shape?</h4>
+                        <p>Select the closest option or "unknown" if you're unsure.</p>
                     </div>
                 </div>
                 
                 <div class="tab-pane" id="xml-info">
-                    <h3>O XML formátu</h3>
-                    <p>XML (eXtensible Markup Language) je formát používaný k ukládání a přenosu strukturovaných dat.</p>
-                    <p>Výhody použití XML:</p>
+                    <h3>About XML Format</h3>
+                    <p>XML (eXtensible Markup Language) is a format used for storing and transferring structured data.</p>
+                    <p>Benefits of using XML:</p>
                     <ul>
-                        <li>Standardizovaný formát pro výměnu dat</li>
-                        <li>Možnost validace proti schématu</li>
-                        <li>Čitelnost pro člověka i stroj</li>
-                        <li>Snadná konverze do jiných formátů</li>
+                        <li>Standardized format for data exchange</li>
+                        <li>Validation against a schema</li>
+                        <li>Human and machine readable</li>
+                        <li>Easy conversion to other formats</li>
                     </ul>
-                    <p>Náš systém používá XML ke standardizaci dat o pozorováních UFO. Všechna data jsou validována proti XSD schématu, což zajišťuje konzistenci a správnost.</p>
+                    <p>Our system uses XML to standardize UFO sighting data. All data is validated against an XSD schema, which ensures consistency and correctness.</p>
+                </div>
+                
+                <div class="tab-pane" id="xml-example">
+                    <h3>XML Structure Example</h3>
+                    <p>Below is an example of the XML structure required for UFO sighting submissions. You can view the full example file <a href="/xml/ufo_sightings.xml" target="_blank">here</a>.</p>
+                    <pre class="code-block"><?= htmlspecialchars(file_get_contents(__DIR__.'/xml/example.xml')) ?></pre>
                 </div>
             </div>
         </div>
