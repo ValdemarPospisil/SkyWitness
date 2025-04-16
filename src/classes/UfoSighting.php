@@ -19,6 +19,26 @@ class UfoSighting {
             ['id' => $id]
         )->fetch();
     }
+    
+    public function getByIds(array $ids) {
+        if (empty($ids)) {
+            return [];
+        }
+        
+        // Create placeholders for the IN clause
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        
+        $query = "SELECT * FROM ufo_sightings WHERE id IN ($placeholders) ORDER BY date_time DESC";
+        $stmt = $this->db->prepare($query);
+        
+        // Bind each ID as a parameter
+        foreach ($ids as $index => $id) {
+            $stmt->bindValue($index + 1, $id, PDO::PARAM_INT);
+        }
+        
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function getPaginated($limit, $offset) {
         $query = "SELECT * FROM ufo_sightings ORDER BY date_time DESC LIMIT :limit OFFSET :offset";

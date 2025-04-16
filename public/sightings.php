@@ -106,7 +106,7 @@ $urlParams = $filters;
                 </div>
                 <div class="filter-actions">
                     <button type="submit" class="primary">Apply Filters</button>
-                    <a href="sighting_detail.php?id=<?= $sighting['id'] ?>" role="button" class="accent">
+                    <a href="sightings.php" role="button" class="accent">
                         <i class="ph ph-arrow-bend-up-left"></i> Reset
                     </a>
                 </div>
@@ -114,10 +114,33 @@ $urlParams = $filters;
             </div>
         </details>
 
+        <!-- XML Export Buttons -->
+        <div class="xml-export-actions mb-3">
+            <button id="select-all-btn" class="primary" onclick="toggleSelectAll()">
+                <i class="ph ph-check-square"></i> Select All
+            </button>
+            <button id="view-xml-btn" class="accent" onclick="viewSelectedXml()" disabled>
+                <i class="ph ph-file-arrow-up"></i> View as XML
+            </button>
+            <button id="download-xml-btn" class="accent" onclick="downloadSelectedXml()" disabled>
+                <i class="ph ph-download"></i> Download XML
+            </button>
+            <button id="view-styled-xml-btn" class="accent" onclick="viewStyledXml()" disabled>
+                <i class="ph ph-file-css"></i> View Styled XML
+            </button>
+            <span id="selection-count">0 sightings selected</span>
+        </div>
+
+        <form id="xml-export-form" method="post" action="export_xml.php" target="_blank">
+            <input type="hidden" name="selected_ids" id="selected-ids-input" value="">
+            <input type="hidden" name="action" id="xml-action" value="">
+        </form>
+
         <div class="table-responsive sighting-card">
             <table role="grid">
                 <thead>
                     <tr>
+                        <th><input type="checkbox" id="select-all-checkbox" aria-label="Select all sightings"></th>
                         <th data-sort="date" scope="col"><i class="ph ph-calendar"></i> Date</th>
                         <th data-sort="location" scope="col"><i class="ph ph-map-pin"></i> Location</th>
                         <th data-sort="shape" scope="col"><i class="ph ph-shapes"></i> Shape</th>
@@ -128,6 +151,9 @@ $urlParams = $filters;
                 <tbody>
                     <?php foreach ($sightings as $sighting): ?>
                     <tr>
+                        <td>
+                            <input type="checkbox" class="sighting-checkbox" value="<?= $sighting['id'] ?>" aria-label="Select sighting">
+                        </td>
                         <td><?= date('M j, Y', strtotime($sighting['date_time'])) ?></td>
                         <td>
                             <?= htmlspecialchars($sighting['country']) ?>
@@ -150,88 +176,88 @@ $urlParams = $filters;
             </table>
         </div>
 
+        <ul class="pagination">
+            <li>
+                <a 
+                    href="?<?= buildQueryString(array_merge($urlParams, ['page' => max(1, $page - 1)])) ?>" 
+                    class="button <?= $page == 1 ? 'secondary disabled' : 'accent' ?>" 
+                    aria-label="Previous">
+                    &laquo;
+                </a>
+            </li>
+            <!-- První stránka -->
+            <li>
+                <a 
+                    href="?<?= buildQueryString(array_merge($urlParams, ['page' => 1])) ?>" 
+                    class="button <?= $page == 1 ? 'secondary disabled' : 'accent' ?>" 
+                    aria-label="First">
+                    1
+                </a>
+            </li>
 
-            <ul class="pagination">
-                <li>
-                    <a 
-                        href="?<?= buildQueryString(array_merge($urlParams, ['page' => max(1, $page - 1)])) ?>" 
-                        class="button <?= $page == 1 ? 'secondary disabled' : 'accent' ?>" 
-                        aria-label="Previous">
-                        &laquo;
-                    </a>
-                </li>
-                <!-- První stránka -->
-                <li>
-                    <a 
-                        href="?<?= buildQueryString(array_merge($urlParams, ['page' => 1])) ?>" 
-                        class="button <?= $page == 1 ? 'secondary disabled' : 'accent' ?>" 
-                        aria-label="First">
-                        1
-                    </a>
-                </li>
+            <!-- Ellipsis před aktuální stránkou (když je potřeba) -->
+            <?php if ($page > 3): ?>
+            <li><span>...</span></li>
+            <?php endif; ?>
 
-                <!-- Ellipsis před aktuální stránkou (když je potřeba) -->
-                <?php if ($page > 3): ?>
-                <li><span>...</span></li>
-                <?php endif; ?>
+            <!-- 5 stránek od aktuální (nebo méně, pokud jsme blízko začátku) -->
+            <?php
+            $startPage = max(2, $page - 2);
+            $endPage = min($totalPages - 1, $page + 2);
+            
+            // Pokud jsme blízko začátku, zobrazujeme více stránek směrem dopředu
+            if ($page < 4) {
+                $endPage = min($totalPages - 1, 6);
+            }
+            
+            // Pokud jsme blízko konce, zobrazujeme více stránek směrem dozadu
+            if ($page > $totalPages - 3) {
+                $startPage = max(2, $totalPages - 5);
+            }
+            
+            for ($i = $startPage; $i <= $endPage; $i++):
+            ?>
+            <li>
+                <a 
+                    href="?<?= buildQueryString(array_merge($urlParams, ['page' => $i])) ?>" 
+                    class="button <?= $i == $page ? 'secondary disabled' : 'accent' ?>">
+                    <?= $i ?>
+                </a>
+            </li>
+            <?php endfor; ?>
 
-                <!-- 5 stránek od aktuální (nebo méně, pokud jsme blízko začátku) -->
-                <?php
-                $startPage = max(2, $page - 2);
-                $endPage = min($totalPages - 1, $page + 2);
-                
-                // Pokud jsme blízko začátku, zobrazujeme více stránek směrem dopředu
-                if ($page < 4) {
-                    $endPage = min($totalPages - 1, 6);
-                }
-                
-                // Pokud jsme blízko konce, zobrazujeme více stránek směrem dozadu
-                if ($page > $totalPages - 3) {
-                    $startPage = max(2, $totalPages - 5);
-                }
-                
-                for ($i = $startPage; $i <= $endPage; $i++):
-                ?>
-                <li>
-                    <a 
-                        href="?<?= buildQueryString(array_merge($urlParams, ['page' => $i])) ?>" 
-                        class="button <?= $i == $page ? 'secondary disabled' : 'accent' ?>">
-                        <?= $i ?>
-                    </a>
-                </li>
-                <?php endfor; ?>
+            <!-- Ellipsis po aktuální stránce (když je potřeba) -->
+            <?php if ($endPage < $totalPages - 1): ?>
+            <li><span>...</span></li>
+            <?php endif; ?>
 
-                <!-- Ellipsis po aktuální stránce (když je potřeba) -->
-                <?php if ($endPage < $totalPages - 1): ?>
-                <li><span>...</span></li>
-                <?php endif; ?>
+            <!-- Poslední stránka (když není stejná jako první) -->
+            <?php if ($totalPages > 1): ?>
+            <li>
+                <a 
+                    href="?<?= buildQueryString(array_merge($urlParams, ['page' => $totalPages])) ?>" 
+                    class="button <?= $page == $totalPages ? 'secondary disabled' : 'accent' ?>">
+                    <?= $totalPages ?>
+                </a>
+            </li>
+            <?php endif; ?>
 
-                <!-- Poslední stránka (když není stejná jako první) -->
-                <?php if ($totalPages > 1): ?>
-                <li>
-                    <a 
-                        href="?<?= buildQueryString(array_merge($urlParams, ['page' => $totalPages])) ?>" 
-                        class="button <?= $page == $totalPages ? 'secondary disabled' : 'accent' ?>">
-                        <?= $totalPages ?>
-                    </a>
-                </li>
-                <?php endif; ?>
-
-                <!-- Next tlačítko -->
-                
-                <li>
-                    <a 
-                        href="?<?= buildQueryString(array_merge($urlParams, ['page' => min($totalPages, $page + 1)])) ?>" 
-                        class="button <?= $page == $totalPages ? 'secondary disabled' : 'accent' ?>" 
-                        aria-label="Next">
-                        &raquo;
-                    </a>
-                </li>
-            </ul>
-            <p class="pagination-info">
-                <?= $totalRecords ?> záznamů celkem | Stránka <?= $page ?> z <?= $totalPages ?>
-            </p>
+            <!-- Next tlačítko -->
+            <li>
+                <a 
+                    href="?<?= buildQueryString(array_merge($urlParams, ['page' => min($totalPages, $page + 1)])) ?>" 
+                    class="button <?= $page == $totalPages ? 'secondary disabled' : 'accent' ?>" 
+                    aria-label="Next">
+                    &raquo;
+                </a>
+            </li>
+        </ul>
+        <p class="pagination-info">
+            <?= $totalRecords ?> záznamů celkem | Stránka <?= $page ?> z <?= $totalPages ?>
+        </p>
     </article>
 </main>
-<script src="assets/js/table-sort.js"></script>
+
+
+<script src="assets/js/sightings.js"></script>
 <?php include __DIR__.'/../templates/footer.php'; ?>
