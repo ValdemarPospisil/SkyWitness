@@ -24,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
     
     <!-- Your custom styles -->
+    <link rel="stylesheet" href="/assets/css/home-stats.css">
     <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/add-sighting.css">
     <link rel="stylesheet" href="/assets/css/main.css">

@@ -1,0 +1,243 @@
+/* Styly pro domovskou stránku a statistiky */
+
+/* Hero sekce */
+.hero-section {
+    text-align: center;
+    padding: var(--size-6) var(--size-4);
+    margin-bottom: var(--size-5);
+    background-color: var(--surface-2);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+  }
+  
+  .hero-section h2 {
+    font-size: var(--font-size-5);
+    color: var(--primary);
+    margin-bottom: var(--size-3);
+  }
+  
+  .hero-section p {
+    font-size: var(--font-size-3);
+    color: var(--text-2);
+    margin-bottom: var(--size-5);
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--size-4);
+    flex-wrap: wrap;
+  }
+  
+  /* Karty statistik */
+  .stats-section {
+    margin: var(--size-6) 0;
+  }
+  
+  .stats-section h2 {
+    text-align: center;
+    margin-bottom: var(--size-5);
+    color: var(--text-1);
+  }
+  
+  .stat-card {
+    padding: var(--size-4);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+  }
+  
+  .stat-card h3 {
+    font-size: var(--font-size-3);
+    margin-bottom: var(--size-3);
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+  }
+  
+  .stat-card ol, 
+  .stat-card ul {
+    margin-left: var(--size-4);
+  }
+  
+  .stat-card li {
+    margin-bottom: var(--size-2);
+  }
+  
+  .stat-highlight {
+    font-size: var(--font-size-5);
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    margin: var(--size-3) 0;
+  }
+  
+  .stat-description {
+    text-align: center;
+    color: var(--text-2);
+    font-size: var(--font-size-1);
+  }
+  
+  /* Karta náhodného pozorování */
+  .sighting-card {
+    background-color: var(--surface-1);
+    border-radius: var(--radius);
+    padding: var(--size-4);
+    margin: var(--size-5) 0;
+    box-shadow: var(--shadow-2);
+    border-left: 4px solid var(--primary);
+  }
+  
+  .sighting-card header {
+    margin-bottom: var(--size-3);
+  }
+  
+  .sighting-card header h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+    color: var(--primary);
+  }
+  
+  .sighting-info {
+    margin-bottom: var(--size-4);
+  }
+  
+  .sighting-card footer {
+    margin-top: var(--size-3);
+    text-align: right;
+  }
+  
+  /* Grafy podle času */
+  .time-stats,
+  .year-stats {
+    margin: var(--size-6) 0;
+    padding: var(--size-4);
+    background-color: var(--surface-1);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-1);
+  }
+  
+  .time-stats h2,
+  .year-stats h2 {
+    text-align: center;
+    margin-bottom: var(--size-4);
+    color: var(--text-1);
+  }
+  
+  .time-stats p {
+    text-align: center;
+    color: var(--text-2);
+    margin-bottom: var(--size-4);
+  }
+  
+  .hour-chart,
+  .year-chart {
+    display: flex;
+    align-items: flex-end;
+    height: 200px;
+    gap: 2px;
+    padding: var(--size-4) 0;
+    margin: var(--size-5) 0;
+  }
+  
+  .hour-bar,
+  .year-bar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .bar-fill {
+    width: 100%;
+    background-color: var(--primary);
+    border-radius: var(--radius-1) var(--radius-1) 0 0;
+    transition: height var(--transition);
+  }
+  
+  .bar-label {
+    margin-top: var(--size-2);
+    font-size: var(--font-size-0);
+    color: var(--text-muted);
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    text-align: center;
+    min-height: 20px;
+  }
+  
+  .time-insight {
+    text-align: center;
+    color: var(--text-1);
+    font-size: var(--font-size-2);
+    margin-top: var(--size-4);
+  }
+  
+  .time-insight i {
+    color: var(--yellow-500);
+    margin-right: var(--size-2);
+  }
+  
+  /* CTA sekce */
+  .cta-section {
+    margin: var(--size-7) 0;
+    padding: var(--size-5);
+    background-color: var(--jade-50);
+    border-radius: var(--radius);
+    text-align: center;
+    box-shadow: var(--shadow-2);
+  }
+  
+  .cta-section h2 {
+    color: var(--jade-900);
+    margin-bottom: var(--size-3);
+  }
+  
+  .cta-section p {
+    color: var(--jade-800);
+    margin-bottom: var(--size-4);
+    font-size: var(--font-size-2);
+  }
+  
+  .cta-section a {
+    display: inline-block;
+    margin-top: var(--size-3);
+  }
+  
+  /* Responsivní úpravy */
+  @media (max-width: 768px) {
+    .hour-chart,
+    .year-chart {
+      height: 150px;
+    }
+    
+    .bar-label {
+      font-size: 9px;
+    }
+    
+    .action-buttons {
+      flex-direction: column;
+    }
+    
+    .sighting-card footer {
+      text-align: center;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hour-chart {
+      overflow-x: auto;
+      padding-bottom: var(--size-4);
+    }
+    
+    .hour-bar {
+      min-width: 20px;
+    }
+    
+    .stat-highlight {
+      font-size: var(--font-size-4);
+    }
+    
+    .cta-section {
+      padding: var(--size-4) var(--size-3);
+    }
+  }
