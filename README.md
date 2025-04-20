@@ -8,7 +8,7 @@
 
 1. Naklonuj repozitář:  
 ```bash
-   git clone https://github.com/yourusername/SkyWitness.git
+   git clone https://github.com/ValdemarPospisil/SkyWitness.git
 ```
 3. Spusť Docker Compose:  
 ```bash
