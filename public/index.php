@@ -31,14 +31,14 @@ try {
 ?>
 
 <section class="hero-section">
-    <h2><i class="ph ph-flying-saucer"></i> Databáze UFO pozorování</h2>
-    <p>Prozkoumejte <?= number_format($totalSightings) ?> zdokumentovaných UFO pozorování po celém světě.</p>
+    <h2><i class="ph ph-flying-saucer"></i> Database UFO sighting</h2>
+    <p>Discover <?= number_format($totalSightings) ?> documented ufo sightings all over the world.</p>
     <div class="action-buttons">
         <a href="/sightings.php" role="button" class="primary">
-            <i class="ph ph-binoculars"></i> Prohlížet pozorování
+            <i class="ph ph-binoculars"></i> Go through sightings
         </a>
         <a href="/add_sighting.php" role="button" class="secondary">
-            <i class="ph ph-plus-circle"></i> Přidat nové
+            <i class="ph ph-plus-circle"></i> Add new
         </a>
     </div>
 </section>
@@ -46,7 +46,7 @@ try {
 <?php if ($randomSighting): ?>
 <article class="sighting-card">
     <header>
-        <h3><i class="ph ph-shooting-star"></i> Náhodné pozorování</h3>
+        <h3><i class="ph ph-shooting-star"></i> Random sighting</h3>
     </header>
     <div class="sighting-info">
         <p><strong>Datum:</strong> <?= date('j. F Y', strtotime($randomSighting['date_time'])) ?></p>
@@ -63,12 +63,12 @@ try {
 <?php endif; ?>
 
 <section class="stats-section">
-    <h2><i class="ph ph-chart-line"></i> Statistiky UFO pozorování</h2>
+    <h2><i class="ph ph-chart-line"></i> Statistics UFO sightings</h2>
     
     <div class="grid">
         <!-- Top země -->
         <article class="primary-bg stat-card">
-            <h3><i class="ph ph-globe-hemisphere-west"></i> Top země</h3>
+            <h3><i class="ph ph-globe-hemisphere-west"></i> Top countries</h3>
             <ol>
                 <?php foreach ($topCountries as $country): ?>
                 <li><?= htmlspecialchars($country['country']) ?> (<?= number_format($country['count']) ?>)</li>
@@ -78,7 +78,7 @@ try {
         
         <!-- Nejčastější tvary -->
         <article class="secondary-bg stat-card">
-            <h3><i class="ph ph-shapes"></i> Nejčastější tvary</h3>
+            <h3><i class="ph ph-shapes"></i> Most common shapes</h3>
             <ul>
                 <?php foreach ($commonShapes as $shape): ?>
                 <li><?= htmlspecialchars($shape['ufo_shape']) ?> (<?= number_format($shape['count']) ?>)</li>
@@ -88,7 +88,7 @@ try {
         
         <!-- Roční období -->
         <article class="stat-card surface-1">
-            <h3><i class="ph ph-tree"></i> Roční období</h3>
+            <h3><i class="ph ph-tree"></i> Seasons</h3>
             <ul>
                 <?php foreach ($sightingsBySeasons as $season): ?>
                 <li><?= htmlspecialchars($season['season']) ?> (<?= number_format($season['count']) ?>)</li>
@@ -98,7 +98,7 @@ try {
         
         <!-- Průměrná doba -->
         <article class="stat-card surface-1">
-            <h3><i class="ph ph-clock"></i> Průměrná doba pozorování</h3>
+            <h3><i class="ph ph-clock"></i> Average sighting duration</h3>
             <p class="stat-highlight"><?= round($avgDuration / 60, 1) ?> minut</p>
             <p class="stat-description">Průměrná doba trvání UFO pozorování</p>
         </article>
