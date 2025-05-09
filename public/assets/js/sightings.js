@@ -1,38 +1,47 @@
-// table-sort.js
 document.addEventListener('DOMContentLoaded', () => {
+    // Set up server-side sorting functionality
     document.querySelectorAll('th[data-sort]').forEach(th => {
         th.style.cursor = 'pointer';
         th.addEventListener('click', () => {
-            const table = th.closest('table');
-            const tbody = table.querySelector('tbody');
-            const rows = Array.from(tbody.querySelectorAll('tr'));
-            const columnIndex = Array.from(th.parentNode.children).indexOf(th);
-            const type = th.dataset.sort;
-            const ascending = !th.classList.contains('asc');
-
-            rows.sort((a, b) => {
-                const cellA = a.children[columnIndex].textContent.trim().toLowerCase();
-                const cellB = b.children[columnIndex].textContent.trim().toLowerCase();
-
-                if (type === 'date') {
-                    return ascending
-                        ? new Date(cellA) - new Date(cellB)
-                        : new Date(cellB) - new Date(cellA);
-                }
-
-                return ascending
-                    ? cellA.localeCompare(cellB)
-                    : cellB.localeCompare(cellA);
-            });
-
-            table.querySelectorAll('th').forEach(t => t.classList.remove('asc', 'desc'));
-            th.classList.add(ascending ? 'asc' : 'desc');
-
-            rows.forEach(row => tbody.appendChild(row));
+            // Get the sort column name
+            const sortColumn = th.dataset.sort;
+            if (!sortColumn) return;
+            
+            // Check if this column is already being sorted
+            const currentOrder = th.classList.contains('asc') ? 'asc' : (th.classList.contains('desc') ? 'desc' : '');
+            
+            // Determine the new sort order
+            const newOrder = currentOrder === 'asc' ? 'desc' : 'asc';
+            
+            // Get current URL and parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Set the sort parameters
+            urlParams.set('sort', sortColumn);
+            urlParams.set('order', newOrder);
+            
+            // Redirect to the new URL with sorting parameters
+            window.location.href = `${window.location.pathname}?${urlParams.toString()}`;
         });
     });
+    
+    // Highlight the currently sorted column
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentSort = urlParams.get('sort');
+    const currentOrder = urlParams.get('order');
+    
+    if (currentSort && currentOrder) {
+        const th = document.querySelector(`th[data-sort="${currentSort}"]`);
+        if (th) {
+            th.classList.add(currentOrder);
+            // Add visual indicators for sort direction
+            const indicator = document.createElement('span');
+            indicator.className = 'sort-indicator';
+            indicator.innerHTML = currentOrder === 'asc' ? ' ↑' : ' ↓';
+            th.appendChild(indicator);
+        }
+    }
 });
-
 
 document.addEventListener('DOMContentLoaded', function() {
     // Add event listeners to all checkboxes

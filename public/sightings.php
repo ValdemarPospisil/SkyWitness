@@ -14,6 +14,28 @@ $filters = [
     'season' => $_GET['season'] ?? ''
 ];
 
+// Sorting parameters
+$sortColumn = $_GET['sort'] ?? 'date_time'; // Default sort by date
+$sortOrder = $_GET['order'] ?? 'desc'; // Default order is descending
+
+// Validate sort column to prevent SQL injection
+$allowedSortColumns = [
+    'date' => 'date_time',
+    'location' => 'country',
+    'shape' => 'ufo_shape',
+    'duration' => 'encounter_seconds'
+];
+
+// Map the frontend column name to database column
+if (isset($allowedSortColumns[$sortColumn])) {
+    $sortColumnDb = $allowedSortColumns[$sortColumn];
+} else {
+    $sortColumnDb = 'date_time'; // Default if invalid column
+}
+
+// Validate sort order
+$sortOrderDb = (strtolower($sortOrder) === 'asc') ? 'ASC' : 'DESC';
+
 // Získání seznamu zemí a tvarů pro filtry
 $countries = $ufoSighting->getDistinctValues('country');
 $shapes = $ufoSighting->getDistinctValues('ufo_shape');
@@ -27,8 +49,8 @@ $limit = 50;
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
-// Získání dat s filtry
-$sightings = $ufoSighting->getPaginatedWithFilters($limit, $offset, $filters);
+// Získání dat s filtry a řazením
+$sightings = $ufoSighting->getPaginatedWithFiltersAndSort($limit, $offset, $filters, $sortColumnDb, $sortOrderDb);
 $totalRecords = $ufoSighting->getTotalCountWithFilters($filters);
 $totalPages = ceil($totalRecords / $limit);
 
@@ -40,8 +62,11 @@ function buildQueryString($params) {
     return http_build_query($params);
 }
 
-// Připravíme parametry pro stránkování
-$urlParams = $filters;
+// Připravíme parametry pro stránkování a zachování filtru/řazení
+$urlParams = array_merge($filters, [
+    'sort' => $_GET['sort'] ?? 'date',
+    'order' => $_GET['order'] ?? 'desc'
+]);
 ?>
 
 <main class="container">
@@ -105,6 +130,9 @@ $urlParams = $filters;
                     </label>
                 </div>
                 <div class="filter-actions">
+                    <!-- Preserve sorting when applying filters -->
+                    <input type="hidden" name="sort" value="<?= htmlspecialchars($_GET['sort'] ?? 'date') ?>">
+                    <input type="hidden" name="order" value="<?= htmlspecialchars($_GET['order'] ?? 'desc') ?>">
                     <button type="submit" class="primary">Apply Filters</button>
                     <a href="sightings.php" role="button" class="accent">
                         <i class="ph ph-arrow-bend-up-left"></i> Reset

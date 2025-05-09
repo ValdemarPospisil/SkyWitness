@@ -20,7 +20,6 @@ function initMap() {
     const marker = document.getElementById('map-marker');
     const mapImage = document.querySelector('#sighting-map img');
 
-    // Použij přímo rozměry po načtení DOMu
     const mapWidth = mapImage.clientWidth;
     const mapHeight = mapImage.clientHeight;
 
@@ -39,6 +38,7 @@ function initMap() {
     marker.style.top = `${y}px`;
 }
 
+// Přidejte toto na konec funkce initLeafletMap v souboru sighting-detail.js
 function initLeafletMap() {
     const coordValues = document.querySelectorAll('.coord-value');
     if (coordValues.length < 2) {
@@ -50,6 +50,13 @@ function initLeafletMap() {
     const longitude = parseFloat(coordValues[1].textContent);
     if (isNaN(latitude) || isNaN(longitude)) return;
 
+    // Kontrola zda element existuje
+    const mapElement = document.getElementById('leaflet-map');
+    if (!mapElement) {
+        console.error('Map element not found!');
+        return;
+    }
+
     // Inicializace Leaflet mapy
     const map = L.map('leaflet-map').setView([latitude, longitude], 4);
 
@@ -60,9 +67,14 @@ function initLeafletMap() {
 
     // Marker
     const marker = L.marker([latitude, longitude]).addTo(map)
-        .bindPopup('Tady byl výskyt!')
+        .bindPopup('Sighting location')
+        .openPopup();
+        
+    // Důležité: vynutit překreslení mapy po načtení
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 100);
 }
-
 
 
 function initEncounterTimer() {

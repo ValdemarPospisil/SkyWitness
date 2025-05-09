@@ -1,5 +1,45 @@
 /* Sighting Detail Page Styles */
+/* Styles for leaflet map */
+#leaflet-map {
+    height: 300px;
+    width: 100%;
+    border-radius: var(--radius-1);
+    overflow: hidden;
+    position: relative;
+    background-color: var(--surface-2);
+    /* Ensure the map has proper dimensions even before Leaflet initializes */
+    min-height: 300px;
+}
 
+/* Invert icon color in primary buttons */
+.btn-primary i {
+    color: var(--primary-inverse);
+}
+
+/* Adjust for seasonal themes */
+.spring-theme .btn-primary i,
+.summer-theme .btn-primary i,
+.autumn-theme .btn-primary i,
+.winter-theme .btn-primary i {
+    color: var(--primary-inverse);
+}
+
+/* Make button colors properly respect seasonal themes */
+.spring-theme .btn-primary,
+.summer-theme .btn-primary,
+.autumn-theme .btn-primary,
+.winter-theme .btn-primary {
+    background-color: var(--season-primary);
+    border-color: var(--season-primary);
+}
+
+.spring-theme .btn-primary:hover,
+.summer-theme .btn-primary:hover,
+.autumn-theme .btn-primary:hover,
+.winter-theme .btn-primary:hover {
+    background-color: var(--season-accent);
+    border-color: var(--season-accent);
+}
 .sighting-detail {
     max-width: var(--container-max-width);
     margin: 0 auto;

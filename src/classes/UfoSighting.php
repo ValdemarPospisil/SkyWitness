@@ -84,6 +84,39 @@ class UfoSighting {
     }
 
     /**
+     * Gets records with applied filters and sorting
+     */
+    public function getPaginatedWithFiltersAndSort($limit, $offset, $filters, $sortColumn, $sortOrder) {
+        // Validate sort column and order to prevent SQL injection
+        $allowedColumns = ['date_time', 'country', 'region', 'ufo_shape', 'encounter_seconds'];
+        $sortColumn = in_array($sortColumn, $allowedColumns) ? $sortColumn : 'date_time';
+        $sortOrder = ($sortOrder === 'ASC') ? 'ASC' : 'DESC';
+        
+        $query = "SELECT * FROM ufo_sightings WHERE 1=1";
+        $params = [];
+
+        // Add filter conditions
+        $query .= $this->buildFilterConditions($filters, $params);
+        
+        // Add sorting, limit and offset
+        $query .= " ORDER BY $sortColumn $sortOrder LIMIT :limit OFFSET :offset";
+        
+        $stmt = $this->db->prepare($query);
+        
+        // Set parameters for filters
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+        
+        // Set parameters for limit and offset
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
      * Spočítá celkový počet záznamů s aplikovanými filtry
      */
     public function getTotalCountWithFilters($filters) {

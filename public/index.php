@@ -26,7 +26,7 @@ try {
     $avgDuration = $stats->getAverageDuration();
     
 } catch(PDOException $e) {
-    echo "<div class='alert alert-danger'>Chyba při připojení k databázi: " . $e->getMessage() . "</div>";
+    echo "<div class='alert alert-danger'>Error connectiong to datbase: " . $e->getMessage() . "</div>";
 }
 ?>
 
@@ -49,14 +49,14 @@ try {
         <h3><i class="ph ph-shooting-star"></i> Random sighting</h3>
     </header>
     <div class="sighting-info">
-        <p><strong>Datum:</strong> <?= date('j. F Y', strtotime($randomSighting['date_time'])) ?></p>
-        <p><strong>Místo:</strong> <?= htmlspecialchars($randomSighting['locale'] . ', ' . $randomSighting['region'] . ', ' . $randomSighting['country']) ?></p>
-        <p><strong>Tvar:</strong> <?= htmlspecialchars($randomSighting['ufo_shape']) ?></p>
-        <p><?= htmlspecialchars(substr($randomSighting['description'], 0, 200)) ?>...</p>
+        <p><strong>Date:</strong> <?= date('j. F Y', strtotime($randomSighting['date_time'])) ?></p>
+        <p><strong>Location:</strong> <?= htmlspecialchars($randomSighting['locale'] . ', ' . $randomSighting['region'] . ', ' . $randomSighting['country']) ?></p>
+        <p><strong>Shape:</strong> <?= htmlspecialchars($randomSighting['ufo_shape']) ?></p>
+        <p><?= substr($randomSighting['description'], 0, 300) ?>...</p>
     </div>
     <footer>
         <a href="/sighting_detail.php?id=<?= $randomSighting['id'] ?>" role="button" class="accent">
-            <i class="ph ph-info"></i> Zobrazit detail
+            <i class="ph ph-info"></i> View detail
         </a>
     </footer>
 </article>
@@ -99,16 +99,16 @@ try {
         <!-- Průměrná doba -->
         <article class="stat-card surface-1">
             <h3><i class="ph ph-clock"></i> Average sighting duration</h3>
-            <p class="stat-highlight"><?= round($avgDuration / 60, 1) ?> minut</p>
-            <p class="stat-description">Průměrná doba trvání UFO pozorování</p>
+            <p class="stat-highlight"><?= round($avgDuration / 60, 1) ?> minutes</p>
+            <p class="stat-description">Average suration time of the ufo sighting</p>
         </article>
     </div>
 </section>
 
 <!-- Denní statistiky -->
 <section class="time-stats">
-    <h2><i class="ph ph-clock-countdown"></i> Kdy se UFO objevují?</h2>
-    <p>UFO pozorování podle času (hodiny)</p>
+    <h2><i class="ph ph-clock-countdown"></i> When does the UFO appear?</h2>
+    <p>UFO sightings by time (hour)</p>
     
     <div class="hour-chart">
         <?php 
@@ -153,13 +153,13 @@ try {
             }
         }
         ?>
-        Nejvíce UFO pozorování bylo zaznamenáno ve <?= $maxHour ?>:00 hodin.
+        Most ufo sightings were registered in <?= $maxHour ?>:00 hodin.
     </p>
 </section>
 
 <!-- Roční trend -->
 <section class="year-stats">
-    <h2><i class="ph ph-chart-line-up"></i> Trendy v pozorování</h2>
+    <h2><i class="ph ph-chart-line-up"></i> Trends in sightins</h2>
     <div class="year-chart">
         <?php 
         // Seřadíme roky vzestupně pro graf
@@ -187,10 +187,10 @@ try {
 
 <!-- Výzva k participaci -->
 <section class="cta-section">
-    <h2><i class="ph ph-user-plus"></i> Zažili jste setkání s UFO?</h2>
-    <p>Přidejte své vlastní pozorování do naší globální databáze a pomáhejte mapovat neznámé.</p>
+    <h2><i class="ph ph-user-plus"></i> Have you ever seen an UFO?</h2>
+    <p>Add your own sighting to our global database and help map the unknown</p>
     <a href="/add_sighting.php" role="button" class="primary">
-        <i class="ph ph-plus-circle"></i> Přidat nové pozorování
+        <i class="ph ph-plus-circle"></i> Add new sighting
     </a>
 </section>
    

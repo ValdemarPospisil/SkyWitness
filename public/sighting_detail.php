@@ -38,7 +38,7 @@ include __DIR__.'/../templates/header.php';
         <div class="location-badge">
             <i class="ph ph-map-pin"></i>
             <?= htmlspecialchars($sighting['country']) ?>, 
-            <?= htmlspecialchars($sighting['region']) ?>
+            <?= $sighting['region'] ?? 'Unknown' ?>
         </div>
     </header>
     
@@ -74,7 +74,7 @@ include __DIR__.'/../templates/header.php';
             
             <div class="sighting-description">
                 <h3>Witness Description</h3>
-                <p><?= nl2br(htmlspecialchars($sighting['description'])) ?></p>
+                <p><?= nl2br($sighting['description']) ?></p>
             </div>
         </div>
 
@@ -141,7 +141,6 @@ include __DIR__.'/../templates/header.php';
     </div>
 </div>
 
-<!-- Script for map and encounter timer -->
 <script src="assets/js/sighting-detail.js"></script>
 
 <?php include __DIR__.'/../templates/footer.php'; ?>

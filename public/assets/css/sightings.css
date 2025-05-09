@@ -43,6 +43,34 @@
     gap: var(--size-2);
   }
   
+/* Sorting indicators */
+th[data-sort] {
+    position: relative;
+    cursor: pointer;
+}
+
+th[data-sort]::after {
+    content: "↕";
+    opacity: 0.3;
+    font-size: 0.8em;
+    margin-left: 5px;
+}
+
+th[data-sort].asc::after {
+    content: "↑";
+    opacity: 1;
+}
+
+th[data-sort].desc::after {
+    content: "↓";
+    opacity: 1;
+}
+
+.sort-indicator {
+    margin-left: 5px;
+    font-size: 0.8em;
+}
+
   /* Form elements */
   label {
     display: block;

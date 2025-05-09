@@ -142,19 +142,4 @@ class UfoStatistics {
         return $this->db->query($query)->fetchColumn();
     }
 
-    /**
-     * Get recent sightings
-     * @param int $days Number of days to look back
-     * @return int Count of recent sightings
-     */
-    public function getRecentSightings($days = 30) {
-        $query = "SELECT COUNT(*) FROM ufo_sightings 
-                 WHERE date_documented >= NOW() - INTERVAL ':days days'";
-                 
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(':days', $days, PDO::PARAM_INT);
-        $stmt->execute();
-        
-        return $stmt->fetchColumn();
-    }
 }
