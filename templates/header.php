@@ -42,15 +42,15 @@
             
             <nav>
                 <ul>
-                    <li><a href="/"><i class="ph ph-house"></i> Home</a></li>
-                    <li><a href="/sightings.php"><i class="ph ph-binoculars"></i> Sightings</a></li>
-                    <li><a href="/add_sighting.php"><i class="ph ph-code"></i> Add a Sighting</a></li>
+                    <li><a href="/"><i class="pg ph ph-house"></i> Home</a></li>
+                    <li><a href="/sightings.php"><i class="pg ph ph-binoculars"></i> Sightings</a></li>
+                    <li><a href="/add_sighting.php"><i class="pg ph ph-code"></i> Add a Sighting</a></li>
                 </ul>
             </nav>
             
             <div class="theme-switcher">
                 <button class="theme-btn" id="theme-toggle" title="Switch theme">
-                    <i class="ph ph-sun" id="theme-icon"></i>
+                    <i class="pg ph ph-sun" id="theme-icon"></i>
                 </button>
             </div>
         </header>

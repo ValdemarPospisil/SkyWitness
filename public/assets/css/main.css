@@ -8,6 +8,7 @@ body {
   padding: 0;
 }
 
+
 .container {
   width: 100%;
   max-width: var(--container-max-width);

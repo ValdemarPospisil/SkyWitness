@@ -37,8 +37,8 @@ include __DIR__.'/../templates/header.php';
         </div>
         <div class="location-badge">
             <i class="ph ph-map-pin"></i>
-            <?= htmlspecialchars($sighting['country']) ?>, 
-            <?= $sighting['region'] ?? 'Unknown' ?>
+            <?= $sighting['country'] ?? 'Unknown country' ?>, 
+            <?= $sighting['region'] ?? 'Unknown region' ?>
         </div>
     </header>
     
@@ -118,7 +118,7 @@ include __DIR__.'/../templates/header.php';
                 </tr>
                 <tr>
                     <th>Locale:</th>
-                    <td><?= htmlspecialchars($sighting['locale']) ?></td>
+                    <td><?= $sighting['locale'] ?? 'Unknown locale' ?></td>
                 </tr>
                 <tr>
                     <th>Year:</th>

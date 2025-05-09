@@ -31,7 +31,7 @@ try {
 ?>
 
 <section class="hero-section">
-    <h2><i class="ph ph-flying-saucer"></i> Database UFO sighting</h2>
+    <h2><i class="pg ph ph-flying-saucer"></i> Database UFO sighting</h2>
     <p>Discover <?= number_format($totalSightings) ?> documented ufo sightings all over the world.</p>
     <div class="action-buttons">
         <a href="/sightings.php" role="button" class="primary">
@@ -63,7 +63,7 @@ try {
 <?php endif; ?>
 
 <section class="stats-section">
-    <h2><i class="ph ph-chart-line"></i> Statistics UFO sightings</h2>
+    <h2><i class="pg ph ph-chart-line"></i> Statistics UFO sightings</h2>
     
     <div class="grid">
         <!-- Top země -->
@@ -107,7 +107,7 @@ try {
 
 <!-- Denní statistiky -->
 <section class="time-stats">
-    <h2><i class="ph ph-clock-countdown"></i> When does the UFO appear?</h2>
+    <h2><i class="pg ph ph-clock-countdown"></i> When does the UFO appear?</h2>
     <p>UFO sightings by time (hour)</p>
     
     <div class="hour-chart">
@@ -159,7 +159,7 @@ try {
 
 <!-- Roční trend -->
 <section class="year-stats">
-    <h2><i class="ph ph-chart-line-up"></i> Trends in sightins</h2>
+    <h2><i class="pg ph ph-chart-line-up"></i> Trends in sightins</h2>
     <div class="year-chart">
         <?php 
         // Seřadíme roky vzestupně pro graf
@@ -187,7 +187,7 @@ try {
 
 <!-- Výzva k participaci -->
 <section class="cta-section">
-    <h2><i class="ph ph-user-plus"></i> Have you ever seen an UFO?</h2>
+    <h2><i class="pg ph ph-user-plus"></i> Have you ever seen an UFO?</h2>
     <p>Add your own sighting to our global database and help map the unknown</p>
     <a href="/add_sighting.php" role="button" class="primary">
         <i class="ph ph-plus-circle"></i> Add new sighting

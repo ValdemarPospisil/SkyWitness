@@ -154,7 +154,7 @@ $urlParams = array_merge($filters, [
                 <i class="ph ph-download"></i> Download XML
             </button>
             <button id="view-styled-xml-btn" class="accent" onclick="viewStyledXml()" disabled>
-                <i class="ph ph-file-css"></i> View Styled XML
+                <i style="color: black" class="ph ph-file-css"></i> View Styled XML
             </button>
             <span id="selection-count">0 sightings selected</span>
         </div>
@@ -169,10 +169,10 @@ $urlParams = array_merge($filters, [
                 <thead>
                     <tr>
                         <th><input type="checkbox" id="select-all-checkbox" aria-label="Select all sightings"></th>
-                        <th data-sort="date" scope="col"><i class="ph ph-calendar"></i> Date</th>
-                        <th data-sort="location" scope="col"><i class="ph ph-map-pin"></i> Location</th>
-                        <th data-sort="shape" scope="col"><i class="ph ph-shapes"></i> Shape</th>
-                        <th data-sort="duration" scope="col"><i class="ph ph-clock"></i> Duration</th>
+                        <th data-sort="date" scope="col"><i class="pg ph ph-calendar"></i> Date</th>
+                        <th data-sort="location" scope="col"><i class="pg ph ph-map-pin"></i> Location</th>
+                        <th data-sort="shape" scope="col"><i class="pg ph ph-shapes"></i> Shape</th>
+                        <th data-sort="duration" scope="col"><i class="pg ph ph-clock"></i> Duration</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -184,8 +184,8 @@ $urlParams = array_merge($filters, [
                         </td>
                         <td><?= date('M j, Y', strtotime($sighting['date_time'])) ?></td>
                         <td>
-                            <?= htmlspecialchars($sighting['country']) ?>
-                            <?= $sighting['region'] ? ', '.htmlspecialchars($sighting['region']) : '' ?>
+                            <?= $sighting['country'] ?? ''?>
+                            <?= $sighting['region'] ? ', '.$sighting['region'] : '' ?>
                         </td>
                         <td>
                             <span class="ufo-shape">

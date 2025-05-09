@@ -2,7 +2,7 @@
 
 /* Hero sekce */
 .hero-section {
-    text-align: center;
+    text-align: left;
     padding: var(--size-6) var(--size-4);
     margin-bottom: var(--size-5);
     background-color: var(--surface-2);
@@ -31,11 +31,11 @@
   
   /* Karty statistik */
   .stats-section {
-    margin: var(--size-6) 0;
+    margin: var(--size-6);
   }
   
   .stats-section h2 {
-    text-align: center;
+    text-align: left;
     margin-bottom: var(--size-5);
     color: var(--text-1);
   }
@@ -44,13 +44,14 @@
     padding: var(--size-4);
     border-radius: var(--radius);
     box-shadow: var(--shadow-1);
+    background-color: var(--surface-1);
   }
   
   .stat-card h3 {
-    font-size: var(--font-size-3);
+    font-size: var(--font-size-2);
     margin-bottom: var(--size-3);
     display: flex;
-    align-items: center;
+    align-items: left;
     gap: var(--size-2);
   }
   
@@ -71,7 +72,7 @@
   }
   
   .stat-description {
-    text-align: center;
+    text-align: left;
     color: var(--text-2);
     font-size: var(--font-size-1);
   }
@@ -92,7 +93,7 @@
   
   .sighting-card header h3 {
     display: flex;
-    align-items: center;
+    align-items: left;
     gap: var(--size-2);
     color: var(--primary);
   }
@@ -118,13 +119,13 @@
   
   .time-stats h2,
   .year-stats h2 {
-    text-align: center;
+    text-align: left;
     margin-bottom: var(--size-4);
     color: var(--text-1);
   }
   
   .time-stats p {
-    text-align: center;
+    text-align: left;
     color: var(--text-2);
     margin-bottom: var(--size-4);
   }
@@ -188,6 +189,7 @@
   }
   
   .cta-section h2 {
+    text-align: left;
     color: var(--jade-900);
     margin-bottom: var(--size-3);
   }

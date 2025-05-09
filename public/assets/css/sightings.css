@@ -245,10 +245,17 @@ th[data-sort].desc::after {
   }
   
   /* Icon styling */
+  i.pg {
+    color: var(--primary);
+  }
+
+  i.pb {
+    color: var(--background)
+  }
+
   i.ph {
     margin-right: var(--size-1);
     vertical-align: -0.125em;
-    color: var(--primary);
   }
   
   /* Pagination */

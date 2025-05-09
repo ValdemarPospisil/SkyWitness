@@ -16,6 +16,3 @@ RUN curl --retry 3 --retry-delay 5 -sS https://getcomposer.org/installer | php -
 WORKDIR /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 
-# Doporučuji přidat pro produkci:
-# COPY . /var/www/html
-# RUN composer install --no-dev --optimize-autoloader
