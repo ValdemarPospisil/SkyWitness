@@ -6,43 +6,92 @@
     background: var(--surface-1);
     box-shadow: var(--shadow-2);
     margin-bottom: var(--size-4);
-  }
+}
+
+select[multiple] {
+  height: auto;
+  min-height: 120px;
+}
   
-  .filters-summary {
-    cursor: pointer;
-    margin: auto;
-    padding: var(--size-3);
-    border-radius: var(--radius-2);
-    background: var(--surface-2);
-    color: var(--text-1);
-    font-weight: var(--font-weight-6);
-    display: flex;
-    align-items: center;
-    gap: var(--size-2);
-    width: 100%;
-    transition: background var(--transition-fast);
-  }
-  
-  .filters-summary:hover {
-    background: var(--surface-3);
-  }
-  
-  .filters-form {
-    margin-top: var(--size-3);
-  }
-  
-  .filter-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--size-3);
-    margin-bottom: var(--size-3);
-  }
-  
-  .filter-actions {
-    display: flex;
-    gap: var(--size-2);
-  }
-  
+.filters-summary {
+  cursor: pointer;
+  margin: auto;
+  padding: var(--size-3);
+  border-radius: var(--radius-2);
+  background: var(--surface-2);
+  color: var(--text-1);
+  font-weight: var(--font-weight-6);
+  display: flex;
+  align-items: center;
+  gap: var(--size-2);
+  width: 100%;
+  transition: background var(--transition-fast);
+}
+
+.filters-summary:hover {
+  background: var(--surface-3);
+}
+
+.filters-form {
+  margin-top: var(--size-3);
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--size-3);
+  margin-bottom: var(--size-3);
+}
+
+.filter-range {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.filter-range select {
+  width: 45%;
+}
+
+.filter-actions {
+  display: flex;
+  gap: var(--size-2);
+}
+
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-2);
+  margin-bottom: var(--size-3);
+  padding: var(--size-2);
+  background-color: var(--surface-1);
+  border-radius: var(--radius-sm);
+}
+
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+  padding: 2px var(--size-2);
+  border-radius: var(--radius-round);
+  font-size: var(--font-size-0);
+  gap: var(--size-1);
+}
+
+.filter-tag button {
+  background: transparent;
+  border: none;
+  color: var(--primary-dark);
+  cursor: pointer;
+  padding: 0;
+  margin-left: var(--size-1);
+  font-size: var(--font-size-0);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
 /* Sorting indicators */
 th[data-sort] {
     position: relative;

@@ -153,7 +153,7 @@ try {
             }
         }
         ?>
-        Most ufo sightings were registered in <?= $maxHour ?>:00 hodin.
+        Most ufo sightings were registered in <?= $maxHour ?>:00 a clock.
     </p>
 </section>
 

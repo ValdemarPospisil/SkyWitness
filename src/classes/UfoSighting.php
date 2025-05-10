@@ -143,29 +143,81 @@ class UfoSighting {
     private function buildFilterConditions($filters, &$params) {
         $conditions = "";
         
+        // Country - multi-select
         if (!empty($filters['country'])) {
-            $conditions .= " AND country = :country";
-            $params[':country'] = $filters['country'];
+            $placeholders = [];
+            foreach ($filters['country'] as $index => $country) {
+                $paramName = ":country_$index";
+                $placeholders[] = $paramName;
+                $params[$paramName] = $country;
+            }
+            if ($placeholders) {
+                $conditions .= " AND country IN (" . implode(',', $placeholders) . ")";
+            }
         }
         
+        // Shape - multi-select
         if (!empty($filters['shape'])) {
-            $conditions .= " AND ufo_shape = :shape";
-            $params[':shape'] = $filters['shape'];
+            $placeholders = [];
+            foreach ($filters['shape'] as $index => $shape) {
+                $paramName = ":shape_$index";
+                $placeholders[] = $paramName;
+                $params[$paramName] = $shape;
+            }
+            if ($placeholders) {
+                $conditions .= " AND ufo_shape IN (" . implode(',', $placeholders) . ")";
+            }
         }
         
-        if (!empty($filters['year'])) {
-            $conditions .= " AND year = :year";
-            $params[':year'] = $filters['year'];
+        // Year range
+        if (!empty($filters['year_min'])) {
+            $conditions .= " AND year >= :year_min";
+            $params[':year_min'] = $filters['year_min'];
         }
         
+        if (!empty($filters['year_max'])) {
+            $conditions .= " AND year <= :year_max";
+            $params[':year_max'] = $filters['year_max'];
+        }
+        
+        // Month range
+        if (!empty($filters['month_min'])) {
+            $conditions .= " AND month >= :month_min";
+            $params[':month_min'] = $filters['month_min'];
+        }
+        
+        if (!empty($filters['month_max'])) {
+            $conditions .= " AND month <= :month_max";
+            $params[':month_max'] = $filters['month_max'];
+        }
+        
+        // Hour range
+        if (!empty($filters['hour_min'])) {
+            $conditions .= " AND hour >= :hour_min";
+            $params[':hour_min'] = $filters['hour_min'];
+        }
+        
+        if (!empty($filters['hour_max'])) {
+            $conditions .= " AND hour <= :hour_max";
+            $params[':hour_max'] = $filters['hour_max'];
+        }
+        
+        // Season - multi-select
         if (!empty($filters['season'])) {
-            $conditions .= " AND season = :season";
-            $params[':season'] = $filters['season'];
+            $placeholders = [];
+            foreach ($filters['season'] as $index => $season) {
+                $paramName = ":season_$index";
+                $placeholders[] = $paramName;
+                $params[$paramName] = $season;
+            }
+            if ($placeholders) {
+                $conditions .= " AND season IN (" . implode(',', $placeholders) . ")";
+            }
         }
         
         return $conditions;
     }
-
+    
     public function getDistinctValues($column) {
         $query = "SELECT DISTINCT {$column} FROM ufo_sightings WHERE {$column} IS NOT NULL ORDER by {$column}";
         $stmt = $this->db->query($query);

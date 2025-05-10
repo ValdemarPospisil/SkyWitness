@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Redirect to the new URL with sorting parameters
             window.location.href = `${window.location.pathname}?${urlParams.toString()}`;
+
+            setupRangeFilters();
         });
     });
     
@@ -42,6 +44,65 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+
+/**
+ * Nastaví chování rozsahových filtrů
+ */
+function setupRangeFilters() {
+    // Zajistí, že minimální hodnota není vyšší než maximální
+    function setupRangePair(minId, maxId) {
+        const minSelect = document.getElementById(minId);
+        const maxSelect = document.getElementById(maxId);
+        
+        if (!minSelect || !maxSelect) return;
+        
+        minSelect.addEventListener('change', () => {
+            const minVal = minSelect.value;
+            if (minVal && maxSelect.value && parseInt(minVal) > parseInt(maxSelect.value)) {
+                maxSelect.value = minVal;
+            }
+        });
+        
+        maxSelect.addEventListener('change', () => {
+            const maxVal = maxSelect.value;
+            if (maxVal && minSelect.value && parseInt(maxVal) < parseInt(minSelect.value)) {
+                minSelect.value = maxVal;
+            }
+        });
+    }
+    // Nastavení pro jednotlivé rozsahové filtry
+    setupRangePair('year_min', 'year_max');
+    setupRangePair('month_min', 'month_max');
+    setupRangePair('hour_min', 'hour_max');
+    
+    // Přidání funkce pro reset jednotlivých filtrů
+    const resetButtons = document.querySelectorAll('.reset-filter');
+    resetButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = button.dataset.target;
+            const elements = document.querySelectorAll(`[name^="${target}"]`);
+            
+            elements.forEach(el => {
+                if (el.tagName === 'SELECT') {
+                    if (el.multiple) {
+                        Array.from(el.options).forEach(option => option.selected = false);
+                    } else {
+                        el.value = '';
+                    }
+                } else if (el.tagName === 'INPUT') {
+                    el.value = '';
+                }
+            });
+        });
+    });
+}
+
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
     // Add event listeners to all checkboxes

@@ -8,11 +8,21 @@ $ufoSighting = new UfoSighting($db);
 
 // Filtry
 $filters = [
-    'country' => $_GET['country'] ?? '',
-    'shape' => $_GET['shape'] ?? '',
-    'year' => $_GET['year'] ?? '',
-    'season' => $_GET['season'] ?? ''
+    'country' => isset($_GET['country']) ? (is_array($_GET['country']) ? $_GET['country'] : [$_GET['country']]) : [],
+    'shape' => isset($_GET['shape']) ? (is_array($_GET['shape']) ? $_GET['shape'] : [$_GET['shape']]) : [],
+    'year_min' => $_GET['year_min'] ?? '',
+    'year_max' => $_GET['year_max'] ?? '',
+    'month_min' => $_GET['month_min'] ?? '',
+    'month_max' => $_GET['month_max'] ?? '',
+    'hour_min' => $_GET['hour_min'] ?? '',
+    'hour_max' => $_GET['hour_max'] ?? '',
+    'season' => isset($_GET['season']) ? (is_array($_GET['season']) ? $_GET['season'] : [$_GET['season']]) : []
 ];
+
+
+$filters['country'] = array_filter($filters['country'], function($v) { return $v !== ''; });
+$filters['shape'] = array_filter($filters['shape'], function($v) { return $v !== ''; });
+$filters['season'] = array_filter($filters['season'], function($v) { return $v !== ''; });
 
 // Sorting parameters
 $sortColumn = $_GET['sort'] ?? 'date_time'; // Default sort by date
@@ -37,10 +47,14 @@ if (isset($allowedSortColumns[$sortColumn])) {
 $sortOrderDb = (strtolower($sortOrder) === 'asc') ? 'ASC' : 'DESC';
 
 // Získání seznamu zemí a tvarů pro filtry
+
 $countries = $ufoSighting->getDistinctValues('country');
 $shapes = $ufoSighting->getDistinctValues('ufo_shape');
 $years = $ufoSighting->getDistinctValues('year');
 $seasons = $ufoSighting->getDistinctValues('season');
+$months = array_combine(range(1, 12), ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']);
+$hours = array_combine(range(0, 23), range(0, 23));
+
 
 // Počet záznamů na stránku
 $limit = 50;
@@ -75,7 +89,7 @@ $urlParams = array_merge($filters, [
             <h2><i class="ph ph-binoculars"></i> UFO Sightings</h2>
             <p>Browse through our database of reported unidentified aerial phenomena</p>
         </header>
-
+        
         <!-- Filtry -->
         <details class="filters-container">
             <summary role="button" class="filters-summary">
@@ -84,50 +98,119 @@ $urlParams = array_merge($filters, [
             <div class="filters-form">
                 <form method="get" action="">
                 <div class="filter-grid">
+                    <!-- Country multiselect -->
                     <label for="country">
                     Country:
-                    <select name="country" id="country">
-                        <option value="">All Countries</option>
+                    <select name="country[]" id="country" multiple size="4">
                         <?php foreach ($countries as $country): ?>
-                        <option value="<?= htmlspecialchars($country) ?>" <?= $filters['country'] === $country ? 'selected' : '' ?>>
+                        <option value="<?= htmlspecialchars($country) ?>" <?= in_array($country, $filters['country']) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($country) ?>
                         </option>
                         <?php endforeach; ?>
                     </select>
                     </label>
+
+                    <!-- UFO Shape multiselect -->
                     <label for="shape">
                     UFO Shape:
-                    <select name="shape" id="shape">
-                        <option value="">All Shapes</option>
+                    <select name="shape[]" id="shape" multiple size="4">
                         <?php foreach ($shapes as $shape): ?>
-                        <option value="<?= htmlspecialchars($shape) ?>" <?= $filters['shape'] === $shape ? 'selected' : '' ?>>
+                        <option value="<?= htmlspecialchars($shape) ?>" <?= in_array($shape, $filters['shape']) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($shape) ?>
                         </option>
                         <?php endforeach; ?>
                     </select>
                     </label>
-                    <label for="year">
-                    Year:
-                    <select name="year" id="year">
-                        <option value="">All Years</option>
-                        <?php foreach ($years as $year): ?>
-                        <option value="<?= htmlspecialchars($year) ?>" <?= $filters['year'] === $year ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($year) ?>
-                        </option>
-                        <?php endforeach; ?>
-                    </select>
-                    </label>
+
+                    <!-- Season multiselect -->
                     <label for="season">
                     Season:
-                    <select name="season" id="season">
-                        <option value="">All Seasons</option>
+                    <select name="season[]" id="season" multiple size="4">
                         <?php foreach ($seasons as $season): ?>
-                        <option value="<?= htmlspecialchars($season) ?>" <?= $filters['season'] === $season ? 'selected' : '' ?>>
+                        <option value="<?= htmlspecialchars($season) ?>" <?= in_array($season, $filters['season']) ? 'selected' : '' ?>>
                             <?= htmlspecialchars($season) ?>
                         </option>
                         <?php endforeach; ?>
                     </select>
                     </label>
+
+                    <!-- Year range -->
+                    <div>
+                        <label for="year_min">
+                        Year Range:
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <select name="year_min" id="year_min" style="width: 45%;">
+                                <option value="">Min</option>
+                                <?php foreach ($years as $year): ?>
+                                <option value="<?= htmlspecialchars($year) ?>" <?= $filters['year_min'] === (string)$year ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($year) ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <span>to</span>
+                            <select name="year_max" id="year_max" style="width: 45%;">
+                                <option value="">Max</option>
+                                <?php foreach ($years as $year): ?>
+                                <option value="<?= htmlspecialchars($year) ?>" <?= $filters['year_max'] === (string)$year ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($year) ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        </label>
+                    </div>
+
+                    <!-- Month range -->
+                    <div>
+                        <label for="month_min">
+                        Month Range:
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <select name="month_min" id="month_min" style="width: 45%;">
+                                <option value="">Min</option>
+                                <?php foreach ($months as $num => $name): ?>
+                                <option value="<?= $num ?>" <?= $filters['month_min'] === (string)$num ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($name) ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <span>to</span>
+                            <select name="month_max" id="month_max" style="width: 45%;">
+                                <option value="">Max</option>
+                                <?php foreach ($months as $num => $name): ?>
+                                <option value="<?= $num ?>" <?= $filters['month_max'] === (string)$num ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($name) ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        </label>
+                    </div>
+
+                    <!-- Hour range -->
+                    <div>
+                        <label for="hour_min">
+                        Hour Range:
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <select name="hour_min" id="hour_min" style="width: 45%;">
+                                <option value="">Min</option>
+                                <?php foreach ($hours as $hour): ?>
+                                <option value="<?= $hour ?>" <?= $filters['hour_min'] === (string)$hour ? 'selected' : '' ?>>
+                                    <?= str_pad($hour, 2, '0', STR_PAD_LEFT) ?>:00
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <span>to</span>
+                            <select name="hour_max" id="hour_max" style="width: 45%;">
+                                <option value="">Max</option>
+                                <?php foreach ($hours as $hour): ?>
+                                <option value="<?= $hour ?>" <?= $filters['hour_max'] === (string)$hour ? 'selected' : '' ?>>
+                                    <?= str_pad($hour, 2, '0', STR_PAD_LEFT) ?>:00
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        </label>
+                    </div>
                 </div>
                 <div class="filter-actions">
                     <!-- Preserve sorting when applying filters -->
