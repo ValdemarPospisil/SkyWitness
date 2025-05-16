@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize map
     initMap();
     initLeafletMap();
-    // Initialize encounter timer
     initEncounterTimer();
 });
 
@@ -38,7 +36,6 @@ function initMap() {
     marker.style.top = `${y}px`;
 }
 
-// Přidejte toto na konec funkce initLeafletMap v souboru sighting-detail.js
 function initLeafletMap() {
     const coordValues = document.querySelectorAll('.coord-value');
     if (coordValues.length < 2) {
@@ -50,27 +47,22 @@ function initLeafletMap() {
     const longitude = parseFloat(coordValues[1].textContent);
     if (isNaN(latitude) || isNaN(longitude)) return;
 
-    // Kontrola zda element existuje
     const mapElement = document.getElementById('leaflet-map');
     if (!mapElement) {
         console.error('Map element not found!');
         return;
     }
 
-    // Inicializace Leaflet mapy
     const map = L.map('leaflet-map').setView([latitude, longitude], 4);
 
-    // Tile layer (OpenStreetMap)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Marker
     const marker = L.marker([latitude, longitude]).addTo(map)
         .bindPopup('Sighting location')
         .openPopup();
         
-    // Důležité: vynutit překreslení mapy po načtení
     setTimeout(() => {
         map.invalidateSize();
     }, 100);
@@ -83,7 +75,6 @@ function initEncounterTimer() {
     const startButton = document.getElementById('timer-start');
     const encounterSeconds = parseInt(document.getElementById('encounter-seconds').value);
     
-    // If encounter time is not available or invalid
     if (isNaN(encounterSeconds) || encounterSeconds <= 0) {
         timerDisplay.textContent = 'Duration not available';
         startButton.disabled = true;
@@ -108,15 +99,12 @@ function initEncounterTimer() {
         }
     }
     
-    // Update timer display
     function updateTimer() {
         timerDisplay.textContent = formatTime(remainingSeconds);
         
-        // Update progress bar
         const progressPercentage = (remainingSeconds / encounterSeconds) * 100;
         countdownBar.style.width = `${progressPercentage}%`;
         
-        // Countdown logic
         if (remainingSeconds <= 0) {
             clearInterval(countdownInterval);
             timerDisplay.textContent = "Encounter ended";
@@ -127,21 +115,17 @@ function initEncounterTimer() {
         }
     }
     
-    // Start/pause button click handler
     startButton.addEventListener('click', function() {
         if (isRunning) {
-            // Stop the timer
             clearInterval(countdownInterval);
             startButton.innerHTML = '<i class="ph ph-play"></i> Continue';
             isRunning = false;
         } else {
-            // Check if we need to reset
             if (remainingSeconds <= 0) {
                 remainingSeconds = encounterSeconds;
             }
             
-            // Start the timer
-            updateTimer(); // Update immediately
+            updateTimer();
             countdownInterval = setInterval(updateTimer, 1000);
             startButton.innerHTML = '<i class="ph ph-pause"></i> Pause';
             isRunning = true;

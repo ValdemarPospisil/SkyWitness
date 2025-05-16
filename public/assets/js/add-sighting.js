@@ -5,19 +5,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // Remove active class from all buttons
             tabButtons.forEach(b => b.classList.remove('active'));
-            // Add active class to clicked button
             this.classList.add('active');
             
-            // Hide all panes
             tabPanes.forEach(pane => pane.classList.remove('active'));
-            // Show selected pane
             document.getElementById(this.dataset.tab).classList.add('active');
         });
     });
     
-    // Auto-fill year, month, hour from datetime
     const dateTimeInput = document.getElementById('date_time');
     const yearInput = document.getElementById('year');
     const monthInput = document.getElementById('month');

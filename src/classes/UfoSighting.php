@@ -214,6 +214,18 @@ class UfoSighting {
                 $conditions .= " AND season IN (" . implode(',', $placeholders) . ")";
             }
         }
+
+        if (!empty($filters['search'])) {
+            $searchTerm = "%" . $filters['search'] . "%";
+            $conditions .= " AND (
+                country LIKE :search OR 
+                region LIKE :search OR 
+                locale LIKE :search OR 
+                ufo_shape LIKE :search OR 
+                description LIKE :search
+            )";
+            $params[':search'] = $searchTerm;
+        }
         
         return $conditions;
     }

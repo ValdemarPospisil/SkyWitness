@@ -92,6 +92,41 @@ select[multiple] {
   align-items: center;
 }
 
+.search-container {
+  margin-top: var(--size-3);
+  margin-bottom: var(--size-3);
+  width: 100%;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+}
+
+.search-input-wrapper input {
+  padding-right: var(--size-7);
+  flex-grow: 1;
+}
+
+.search-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--size-3);
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.search-button:hover {
+  color: var(--primary-hover);
+}
+
 /* Sorting indicators */
 th[data-sort] {
     position: relative;

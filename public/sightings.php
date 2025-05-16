@@ -16,7 +16,8 @@ $filters = [
     'month_max' => $_GET['month_max'] ?? '',
     'hour_min' => $_GET['hour_min'] ?? '',
     'hour_max' => $_GET['hour_max'] ?? '',
-    'season' => isset($_GET['season']) ? (is_array($_GET['season']) ? $_GET['season'] : [$_GET['season']]) : []
+    'season' => isset($_GET['season']) ? (is_array($_GET['season']) ? $_GET['season'] : [$_GET['season']]) : [],
+    'search' => $_GET['search'] ?? '' 
 ];
 
 
@@ -24,11 +25,9 @@ $filters['country'] = array_filter($filters['country'], function($v) { return $v
 $filters['shape'] = array_filter($filters['shape'], function($v) { return $v !== ''; });
 $filters['season'] = array_filter($filters['season'], function($v) { return $v !== ''; });
 
-// Sorting parameters
-$sortColumn = $_GET['sort'] ?? 'date_time'; // Default sort by date
-$sortOrder = $_GET['order'] ?? 'desc'; // Default order is descending
+$sortColumn = $_GET['sort'] ?? 'date_time'; 
+$sortOrder = $_GET['order'] ?? 'desc'; 
 
-// Validate sort column to prevent SQL injection
 $allowedSortColumns = [
     'date' => 'date_time',
     'location' => 'country',
@@ -79,7 +78,8 @@ function buildQueryString($params) {
 // Připravíme parametry pro stránkování a zachování filtru/řazení
 $urlParams = array_merge($filters, [
     'sort' => $_GET['sort'] ?? 'date',
-    'order' => $_GET['order'] ?? 'desc'
+    'order' => $_GET['order'] ?? 'desc',
+    'search' => $filters['search']
 ]);
 ?>
 
@@ -212,6 +212,25 @@ $urlParams = array_merge($filters, [
                         </label>
                     </div>
                 </div>
+                
+                <div class="search-container">
+                    <label for="search">
+                        Search sightings:
+                        <div class="search-input-wrapper">
+                            <input 
+                                type="text" 
+                                name="search" 
+                                id="search" 
+                                placeholder="Search country, region, shape, or description..." 
+                                value="<?= htmlspecialchars($filters['search']) ?>"
+                            >
+                            <button type="submit" class="search-button">
+                                <i class="ph ph-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </label>
+                </div>
+
                 <div class="filter-actions">
                     <!-- Preserve sorting when applying filters -->
                     <input type="hidden" name="sort" value="<?= htmlspecialchars($_GET['sort'] ?? 'date') ?>">
@@ -224,6 +243,8 @@ $urlParams = array_merge($filters, [
                 </form>
             </div>
         </details>
+
+        
 
         <!-- XML Export Buttons -->
         <div class="xml-export-actions mb-3">
@@ -247,6 +268,7 @@ $urlParams = array_merge($filters, [
             <input type="hidden" name="action" id="xml-action" value="">
         </form>
 
+        // main table
         <div class="table-responsive sighting-card">
             <table role="grid">
                 <thead>
