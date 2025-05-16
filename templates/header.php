@@ -15,8 +15,6 @@
 
     <!-- Open Props Core -->
     <link rel="stylesheet" href="https://unpkg.com/open-props"/>
-    
-    <!-- Optional imports based on your needs -->
     <link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/open-props/buttons.min.css"/>
     

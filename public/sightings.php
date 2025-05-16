@@ -282,15 +282,15 @@ $urlParams = array_merge($filters, [
                         </td>
                         <td><?= date('M j, Y', strtotime($sighting['date_time'])) ?></td>
                         <td>
-                            <?= $sighting['country'] ?? ''?>
-                            <?= $sighting['region'] ? ', '.$sighting['region'] : '' ?>
+                            <?= $sighting['country'] ?? 'Unknown country'?>
+                            <?= $sighting['region'] ? ', '.$sighting['region'] : 'Unknown region' ?>
                         </td>
                         <td>
                             <span class="ufo-shape">
                                 <?= htmlspecialchars($sighting['ufo_shape'] ?? 'Unknown') ?>
                             </span>
                         </td>
-                        <td><?= htmlspecialchars($sighting['encounter_duration']) ?></td>
+                        <td><?= $sighting['encounter_duration'] ?></td>
                         <td>
                             <a href="sighting_detail.php?id=<?= $sighting['id'] ?>" role="button" class="accent">
                                 <i class="ph ph-info"></i> Details
