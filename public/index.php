@@ -26,16 +26,16 @@ try {
     $avgDuration = $stats->getAverageDuration();
     
 } catch(PDOException $e) {
-    echo "<div class='alert alert-danger'>Error connectiong to datbase: " . $e->getMessage() . "</div>";
+    echo "<div class='alert alert-danger'>Error connecting to database: " . $e->getMessage() . "</div>";
 }
 ?>
 
 <section class="hero-section">
-    <h2><i class="pg ph ph-flying-saucer"></i> Database UFO sighting</h2>
-    <p>Discover <?= number_format($totalSightings) ?> documented ufo sightings all over the world.</p>
+    <h2><i class="ph ph-flying-saucer"></i> Database UFO sighting</h2>
+    <p>Discover <?= number_format($totalSightings) ?> documented UFO sightings all over the world and join our global community of sky watchers.</p>
     <div class="action-buttons">
         <a href="/sightings.php" role="button" class="primary">
-            <i class="ph ph-binoculars"></i> Go through sightings
+            <i class="ph ph-binoculars"></i> Browse sightings
         </a>
         <a href="/add_sighting.php" role="button" class="secondary">
             <i class="ph ph-plus-circle"></i> Add new
@@ -63,51 +63,45 @@ try {
 <?php endif; ?>
 
 <section class="stats-section">
-    <h2><i class="pg ph ph-chart-line"></i> Statistics UFO sightings</h2>
+    <h2><i class="ph ph-chart-line"></i> Statistics UFO sightings</h2>
     
     <div class="grid">
         <!-- Top země -->
         <article class="primary-bg stat-card">
             <h3><i class="ph ph-globe-hemisphere-west"></i> Top countries</h3>
-            <ol>
                 <?php foreach ($topCountries as $country): ?>
                 <li><?= htmlspecialchars($country['country']) ?> (<?= number_format($country['count']) ?>)</li>
                 <?php endforeach; ?>
-            </ol>
         </article>
         
         <!-- Nejčastější tvary -->
         <article class="secondary-bg stat-card">
             <h3><i class="ph ph-shapes"></i> Most common shapes</h3>
-            <ul>
                 <?php foreach ($commonShapes as $shape): ?>
                 <li><?= htmlspecialchars($shape['ufo_shape']) ?> (<?= number_format($shape['count']) ?>)</li>
                 <?php endforeach; ?>
-            </ul>
         </article>
         
         <!-- Roční období -->
         <article class="stat-card surface-1">
             <h3><i class="ph ph-tree"></i> Seasons</h3>
-            <ul>
                 <?php foreach ($sightingsBySeasons as $season): ?>
                 <li><?= htmlspecialchars($season['season']) ?> (<?= number_format($season['count']) ?>)</li>
                 <?php endforeach; ?>
-            </ul>
         </article>
         
         <!-- Průměrná doba -->
         <article class="stat-card surface-1">
             <h3><i class="ph ph-clock"></i> Average sighting duration</h3>
             <p class="stat-highlight"><?= round($avgDuration / 60, 1) ?> minutes</p>
-            <p class="stat-description">Average suration time of the ufo sighting</p>
+            <p class="stat-description">Average duration time of UFO sightings</p>
         </article>
     </div>
 </section>
 
 <!-- Denní statistiky -->
 <section class="time-stats">
-    <h2><i class="pg ph ph-clock-countdown"></i> When does the UFO appear?</h2>
+    <h2><i class="ph ph-clock-countdown"></i> When does the UFO appear?</h2>
     <p>UFO sightings by time (hour)</p>
     
     <div class="hour-chart">
@@ -153,42 +147,14 @@ try {
             }
         }
         ?>
-        Most ufo sightings were registered in <?= $maxHour ?>:00 a clock.
+        Most UFO sightings were registered at <?= $maxHour ?>:00.
     </p>
-</section>
-
-<!-- Roční trend -->
-<section class="year-stats">
-    <h2><i class="pg ph ph-chart-line-up"></i> Trends in sightins</h2>
-    <div class="year-chart">
-        <?php 
-        // Seřadíme roky vzestupně pro graf
-        $years = array_reverse($sightingsByYear);
-        
-        // Najdeme maximum pro škálování
-        $maxCount = 0;
-        foreach ($years as $yearData) {
-            if ($yearData['count'] > $maxCount) {
-                $maxCount = $yearData['count'];
-            }
-        }
-        
-        // Vykreslíme graf
-        foreach ($years as $yearData) {
-            $height = ($yearData['count'] / $maxCount) * 100;
-        ?>
-        <div class="year-bar">
-            <div class="bar-fill" style="height: <?= $height ?>%"></div>
-            <div class="bar-label"><?= $yearData['year'] ?></div>
-        </div>
-        <?php } ?>
-    </div>
 </section>
 
 <!-- Výzva k participaci -->
 <section class="cta-section">
-    <h2><i class="pg ph ph-user-plus"></i> Have you ever seen an UFO?</h2>
-    <p>Add your own sighting to our global database and help map the unknown</p>
+    <h2><i class="ph ph-user-plus"></i> Have you ever seen a UFO?</h2>
+    <p>Add your own sighting to our global database and help map the unknown phenomena in our skies</p>
     <a href="/add_sighting.php" role="button" class="primary">
         <i class="ph ph-plus-circle"></i> Add new sighting
     </a>

@@ -35,18 +35,15 @@ $allowedSortColumns = [
     'duration' => 'encounter_seconds'
 ];
 
-// Map the frontend column name to database column
 if (isset($allowedSortColumns[$sortColumn])) {
     $sortColumnDb = $allowedSortColumns[$sortColumn];
 } else {
-    $sortColumnDb = 'date_time'; // Default if invalid column
+    $sortColumnDb = 'date_time'; 
 }
 
-// Validate sort order
 $sortOrderDb = (strtolower($sortOrder) === 'asc') ? 'ASC' : 'DESC';
 
 // Získání seznamu zemí a tvarů pro filtry
-
 $countries = $ufoSighting->getDistinctValues('country');
 $shapes = $ufoSighting->getDistinctValues('ufo_shape');
 $years = $ufoSighting->getDistinctValues('year');
@@ -224,9 +221,6 @@ $urlParams = array_merge($filters, [
                                 placeholder="Search country, region, shape, or description..." 
                                 value="<?= htmlspecialchars($filters['search']) ?>"
                             >
-                            <button type="submit" class="search-button">
-                                <i class="ph ph-magnifying-glass"></i>
-                            </button>
                         </div>
                     </label>
                 </div>

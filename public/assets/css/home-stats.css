@@ -2,244 +2,495 @@
 
 /* Hero sekce */
 .hero-section {
-    text-align: left;
-    padding: var(--size-6) var(--size-4);
-    margin-bottom: var(--size-5);
-    background-color: var(--surface-2);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-1);
+  text-align: center;
+  padding: var(--size-6) var(--size-5);
+  margin-bottom: var(--size-6);
+  background-color: var(--surface-2);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-2);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at top right, var(--jade-100), transparent 70%);
+  opacity: 0.3;
+  z-index: 0;
+}
+
+.hero-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-section h2 {
+  font-size: var(--font-size-5);
+  color: var(--primary);
+  margin-bottom: var(--size-3);
+  font-weight: var(--font-weight-bold);
+}
+
+.hero-section p {
+  font-size: var(--font-size-3);
+  color: var(--text-1);
+  margin-bottom: var(--size-5);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: var(--size-4);
+  flex-wrap: wrap;
+}
+
+.action-buttons a {
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-2);
+}
+
+/* Karty statistik */
+.stats-section {
+  margin: var(--size-7) 0;
+}
+
+.stats-section h2 {
+  text-align: center;
+  margin-bottom: var(--size-6);
+  color: var(--text-1);
+  font-weight: var(--font-weight-bold);
+  position: relative;
+  padding-bottom: var(--size-3);
+}
+
+.stats-section h2::after {
+  content: '';
+  position: center;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background-color: var(--primary);
+  border-radius: 2px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--size-5);
+}
+
+.stat-card {
+  padding: var(--size-5);
+  text-align: left;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-2);
+  transition: transform var(--transition), box-shadow var(--transition);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-3);
+}
+
+.stat-card h3 {
+  font-size: var(--font-size-3);
+  margin-bottom: var(--size-4);
+  display: flex;
+  align-items: center;
+  gap: var(--size-2);
+  color: inherit;
+}
+
+.stat-card h3 i {
+  font-size: 1.3em;
+}
+
+.stat-card ol, 
+.stat-card ul {
+  margin-left: var(--size-4);
+  margin-top: auto;
+  list-style-position: inside;
+}
+
+.stat-card li {
+  margin-bottom: var(--size-3);
+  line-height: 1.4;
+  position: left;
+  padding-left: var(--size-2);
+}
+
+.stat-highlight {
+  font-size: var(--font-size-5);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  margin: var(--size-4) 0;
+  color: inherit;
+}
+
+.stat-description {
+  text-align: center;
+  color: inherit;
+  opacity: 0.8;
+  font-size: var(--font-size-1);
+}
+
+/* Karta náhodného pozorování */
+.sighting-card {
+  background-color: var(--surface-1);
+  border-radius: var(--radius);
+  padding: var(--size-5);
+  margin: var(--size-6) 0;
+  box-shadow: var(--shadow-2);
+  border-left: 4px solid var(--primary);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.sighting-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-3);
+}
+
+.sighting-card header {
+  margin-bottom: var(--size-4);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--size-3);
+}
+
+.sighting-card header h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--size-2);
+  color: var(--primary);
+  font-size: var(--font-size-4);
+}
+
+.sighting-info {
+  margin-bottom: var(--size-4);
+}
+
+.sighting-info p {
+  margin-bottom: var(--size-3);
+  line-height: 1.6;
+}
+
+.sighting-info p:last-child {
+  font-style: italic;
+  border-left: 3px solid var(--border);
+  padding-left: var(--size-3);
+  margin-top: var(--size-4);
+}
+
+.sighting-card footer {
+  margin-top: var(--size-4);
+  text-align: right;
+}
+
+/* Grafy podle času */
+.time-stats,
+.year-stats {
+  margin: var(--size-7) 0;
+  padding: var(--size-5);
+  background-color: var(--surface-1);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-2);
+}
+
+.time-stats h2,
+.year-stats h2 {
+  text-align: center;
+  margin-bottom: var(--size-5);
+  color: var(--text-1);
+  position: relative;
+  padding-bottom: var(--size-3);
+}
+
+.time-stats h2::after,
+.year-stats h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: var(--primary);
+  border-radius: 2px;
+}
+
+.time-stats p {
+  text-align: center;
+  color: var(--text-2);
+  margin-bottom: var(--size-5);
+}
+
+/* Přepracovaný styl pro hodiny */
+.hour-chart {
+  display: flex;
+  align-items: flex-end;
+  height: 250px;
+  gap: 3px;
+  padding: var(--size-5) var(--size-3);
+  margin: var(--size-5) 0;
+  position: relative;
+}
+
+.hour-chart::before {
+  content: '';
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--border);
+  z-index: 0;
+}
+
+.hour-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  position: relative;
+}
+
+.bar-fill {
+  width: 100%;
+  background: linear-gradient(to top, var(--primary), var(--jade-400));
+  border-radius: var(--radius-1) var(--radius-1) 0 0;
+  transition: height var(--transition);
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.bar-fill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+  z-index: 1;
+}
+
+.bar-label {
+  margin-top: var(--size-2);
+  font-size: var(--font-size-0);
+  color: var(--text-muted);
+  text-align: center;
+  min-height: 20px;
+  width: 100%;
+}
+
+/* Přepracovaný styl pro graf podle roků */
+.year-chart-container {
+  position: relative;
+  height: 250px;
+  width: 100% !important;
+  margin: var(--size-5) 0;
+  padding: 0 var(--size-4);
+}
+
+.year-chart-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.year-axis {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.year-label {
+  font-size: var(--font-size-0);
+  fill: var(--text-muted);
+}
+
+.year-value-line {
+  stroke: var(--primary);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.year-area {
+  fill: url(#yearGradient);
+  opacity: 0.2;
+}
+
+.year-dot {
+  fill: var(--primary);
+  stroke: white;
+  stroke-width: 2;
+}
+
+.year-tooltip {
+  position: absolute;
+  background-color: var(--surface-3);
+  color: var(--text-1);
+  padding: var(--size-2) var(--size-3);
+  border-radius: var(--radius-1);
+  font-size: var(--font-size-1);
+  box-shadow: var(--shadow-2);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+
+.time-insight {
+  text-align: center;
+  color: var(--text-1);
+  font-size: var(--font-size-2);
+  margin-top: var(--size-5);
+  padding: var(--size-3) var(--size-4);
+  background-color: var(--surface-2);
+  border-radius: var(--radius);
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.time-insight i {
+  color: var(--yellow-500);
+  margin-right: var(--size-2);
+}
+
+/* CTA sekce */
+.cta-section {
+  margin: var(--size-7) 0;
+  padding: var(--size-6) var(--size-5);
+  background: linear-gradient(135deg, var(--jade-50), var(--jade-100));
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: var(--shadow-2);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+  z-index: 0;
+}
+
+.cta-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-section h2 {
+  text-align: center;
+  color: var(--jade-900);
+  margin-bottom: var(--size-4);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-4);
+}
+
+.cta-section p {
+  color: var(--jade-800);
+  margin-bottom: var(--size-5);
+  font-size: var(--font-size-3);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-section a {
+  display: inline-block;
+  margin-top: var(--size-3);
+  font-size: var(--font-size-2);
+  padding: var(--size-3) var(--size-5);
+  min-width: 200px;
+}
+
+/* Responsivní úpravy */
+@media (max-width: 768px) {
+  .hour-chart {
+    height: 200px;
   }
   
-  .hero-section h2 {
-    font-size: var(--font-size-5);
-    color: var(--primary);
-    margin-bottom: var(--size-3);
+  .year-chart-container {
+    height: 250px;
   }
   
-  .hero-section p {
-    font-size: var(--font-size-3);
-    color: var(--text-2);
-    margin-bottom: var(--size-5);
+  .bar-label {
+    font-size: 9px;
   }
   
   .action-buttons {
-    display: flex;
-    justify-content: center;
-    gap: var(--size-4);
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
   }
   
-  /* Karty statistik */
-  .stats-section {
-    margin: var(--size-6);
+  .action-buttons a {
+    width: 100%;
+    max-width: 300px;
   }
   
-  .stats-section h2 {
-    text-align: left;
-    margin-bottom: var(--size-5);
-    color: var(--text-1);
+  .sighting-card footer {
+    text-align: center;
   }
   
   .stat-card {
     padding: var(--size-4);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-1);
-    background-color: var(--surface-1);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: var(--size-5) var(--size-3);
   }
   
-  .stat-card h3 {
-    font-size: var(--font-size-2);
-    margin-bottom: var(--size-3);
-    display: flex;
-    align-items: left;
-    gap: var(--size-2);
+  .hour-chart {
+    overflow-x: auto;
+    padding-bottom: var(--size-4);
   }
   
-  .stat-card ol, 
-  .stat-card ul {
-    margin-left: var(--size-4);
-  }
-  
-  .stat-card li {
-    margin-bottom: var(--size-2);
+  .hour-bar {
+    min-width: 20px;
   }
   
   .stat-highlight {
-    font-size: var(--font-size-5);
-    font-weight: var(--font-weight-bold);
-    text-align: center;
-    margin: var(--size-3) 0;
+    font-size: var(--font-size-4);
   }
   
-  .stat-description {
-    text-align: left;
-    color: var(--text-2);
-    font-size: var(--font-size-1);
-  }
-  
-  /* Karta náhodného pozorování */
-  .sighting-card {
-    background-color: var(--surface-1);
-    border-radius: var(--radius);
-    padding: var(--size-4);
-    margin: var(--size-5) 0;
-    box-shadow: var(--shadow-2);
-    border-left: 4px solid var(--primary);
-  }
-  
-  .sighting-card header {
-    margin-bottom: var(--size-3);
-  }
-  
-  .sighting-card header h3 {
-    display: flex;
-    align-items: left;
-    gap: var(--size-2);
-    color: var(--primary);
-  }
-  
-  .sighting-info {
-    margin-bottom: var(--size-4);
-  }
-  
-  .sighting-card footer {
-    margin-top: var(--size-3);
-    text-align: right;
-  }
-  
-  /* Grafy podle času */
-  .time-stats,
-  .year-stats {
-    margin: var(--size-6) 0;
-    padding: var(--size-4);
-    background-color: var(--surface-1);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-1);
-  }
-  
-  .time-stats h2,
-  .year-stats h2 {
-    text-align: left;
-    margin-bottom: var(--size-4);
-    color: var(--text-1);
-  }
-  
-  .time-stats p {
-    text-align: left;
-    color: var(--text-2);
-    margin-bottom: var(--size-4);
-  }
-  
-  .hour-chart,
-  .year-chart {
-    display: flex;
-    align-items: flex-end;
-    height: 200px;
-    gap: 2px;
-    padding: var(--size-4) 0;
-    margin: var(--size-5) 0;
-  }
-  
-  .hour-bar,
-  .year-bar {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-  }
-  
-  .bar-fill {
-    width: 100%;
-    background-color: var(--primary);
-    border-radius: var(--radius-1) var(--radius-1) 0 0;
-    transition: height var(--transition);
-  }
-  
-  .bar-label {
-    margin-top: var(--size-2);
-    font-size: var(--font-size-0);
-    color: var(--text-muted);
-    writing-mode: vertical-lr;
-    transform: rotate(180deg);
-    text-align: center;
-    min-height: 20px;
-  }
-  
-  .time-insight {
-    text-align: center;
-    color: var(--text-1);
-    font-size: var(--font-size-2);
-    margin-top: var(--size-4);
-  }
-  
-  .time-insight i {
-    color: var(--yellow-500);
-    margin-right: var(--size-2);
-  }
-  
-  /* CTA sekce */
   .cta-section {
-    margin: var(--size-7) 0;
-    padding: var(--size-5);
-    background-color: var(--jade-50);
-    border-radius: var(--radius);
-    text-align: center;
-    box-shadow: var(--shadow-2);
+    padding: var(--size-5) var(--size-3);
   }
   
-  .cta-section h2 {
-    text-align: left;
-    color: var(--jade-900);
-    margin-bottom: var(--size-3);
+  .stats-section .grid {
+    grid-template-columns: 1fr;
   }
-  
-  .cta-section p {
-    color: var(--jade-800);
-    margin-bottom: var(--size-4);
-    font-size: var(--font-size-2);
+
+  .stats-section .ul {
+    text-align: left; 
   }
-  
-  .cta-section a {
-    display: inline-block;
-    margin-top: var(--size-3);
-  }
-  
-  /* Responsivní úpravy */
-  @media (max-width: 768px) {
-    .hour-chart,
-    .year-chart {
-      height: 150px;
-    }
-    
-    .bar-label {
-      font-size: 9px;
-    }
-    
-    .action-buttons {
-      flex-direction: column;
-    }
-    
-    .sighting-card footer {
-      text-align: center;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .hour-chart {
-      overflow-x: auto;
-      padding-bottom: var(--size-4);
-    }
-    
-    .hour-bar {
-      min-width: 20px;
-    }
-    
-    .stat-highlight {
-      font-size: var(--font-size-4);
-    }
-    
-    .cta-section {
-      padding: var(--size-4) var(--size-3);
-    }
-  }
+}
+
+}
