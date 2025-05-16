@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function setupRangeFilters() {
     function setupRangePair(minId, maxId) {
-        const minSelect = document.getElProcedurální generátor 3DementById(minId);
+        const minSelect = document.getElementById(minId);
         const maxSelect = document.getElementById(maxId);
         
         if (!minSelect || !maxSelect) return;

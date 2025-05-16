@@ -262,7 +262,6 @@ $urlParams = array_merge($filters, [
             <input type="hidden" name="action" id="xml-action" value="">
         </form>
 
-        // main table
         <div class="table-responsive sighting-card">
             <table role="grid">
                 <thead>
